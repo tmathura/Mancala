@@ -1,4 +1,6 @@
+using FluentAssertions;
 using Mancala.Core.Implementations;
+using Mancala.Domain.Models;
 
 namespace Mancala.Core.UnitTests.Implementations
 {
@@ -59,10 +61,93 @@ namespace Mancala.Core.UnitTests.Implementations
                     Assert.Equal(pitId, currentPlayerPits[pitId].Id);
 
                     // Check that the sequence is correct within the list of pits
-                    var pitSequence = currentPlayerPits[pitId].Sequence;
-                    Assert.Equal(board.Pits.FindIndex(pit => pit.Sequence == pitSequence), pitSequence);
+                    var pitSequence = currentPlayerPits[pitId].SequenceId;
+                    Assert.Equal(board.Pits.FindIndex(pit => pit.SequenceId == pitSequence), pitSequence);
                 }
             }
+        }
+
+        /// <summary>
+        /// Test a player taking a turn.
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(BoardBlTestMemberData.TakePlayerTurnData), MemberType = typeof(BoardBlTestMemberData))]
+        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits)
+        {
+            // Arrange
+            var playerNames = new List<string> { "Player 1", "Player 2" };
+            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
+
+            // Act
+            var board = _boardBl.TakePlayerTurn(sequenceId, playerId);
+
+            // Assert
+            Assert.Equal(expectedStores.Count, board.Stores.Count);
+
+            // Check that the expected stores matched the actual stores
+            for (var storeIndex = 0; storeIndex < expectedStores.Count; storeIndex++)
+            {
+                expectedStores[storeIndex].Should().BeEquivalentTo(board.Stores[storeIndex]);
+            }
+            
+            Assert.Equal(expectedPits.Count, board.Pits.Count);
+
+            // Check that the expected pits matched the actual pits
+            for (var pitIndex = 0; pitIndex < expectedPits.Count; pitIndex++)
+            {
+                expectedPits[pitIndex].Should().BeEquivalentTo(board.Pits[pitIndex]);
+            }
+        }
+
+        /// <summary>
+        /// Test that when a player takes a turn and the game is not started an error is thrown.
+        /// </summary>
+        [Fact]
+        public void TakePlayerTurn_Error_GameNotStarted()
+        {
+            // Act
+            void Action() => _boardBl.TakePlayerTurn(0, 0);
+
+            // Assert
+            var exception = Assert.Throws<NullReferenceException>(Action);
+            Assert.Equal("The board is not instantiated.", exception.Message);
+        }
+
+        /// <summary>
+        /// Test that when a player takes a turn and an invalid pit is selected an error is thrown.
+        /// </summary>
+        [Fact]
+        public void TakePlayerTurn_Error_InvalidPitSelected()
+        {
+            // Arrange
+            var playerNames = new List<string> { "Player 1", "Player 2" };
+            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
+
+            // Act
+            void Action() => _boardBl.TakePlayerTurn(0, 1);
+
+            // Assert
+            var exception = Assert.Throws<Exception>(Action);
+            Assert.Equal("The selected player is not allowed to sow from this pit.", exception.Message);
+        }
+
+        /// <summary>
+        /// Test that when a player takes a turn and the pit has no seeds an error is thrown.
+        /// </summary>
+        [Fact]
+        public void TakePlayerTurn_Error_PitHasNoSeed()
+        {
+            // Arrange
+            var playerNames = new List<string> { "Player 1", "Player 2" };
+            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
+            _boardBl.TakePlayerTurn(0, 0);
+
+            // Act
+            void Action() => _boardBl.TakePlayerTurn(0, 0);
+
+            // Assert
+            var exception = Assert.Throws<Exception>(Action);
+            Assert.Equal("The selected pit has no seed.", exception.Message);
         }
     }
 }

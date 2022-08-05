@@ -2,17 +2,17 @@
 {
     public class Pit
     {
-        public Pit(int id, int playerId, int seeds, int sequence)
+        public Pit(int id, int playerId, int seeds, int sequenceId)
         {
             Id = id;
             PlayerId = playerId;
             Seeds = seeds;
-            Sequence = sequence;
+            SequenceId = sequenceId;
         }
 
         public int Id { get; }
         public int PlayerId { get; }
         public int Seeds { get; set; }
-        public int Sequence { get; }
+        public int SequenceId { get; }
     }
 }

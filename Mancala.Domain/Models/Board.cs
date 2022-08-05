@@ -4,7 +4,7 @@
     {
         public Board(List<Player> players, List<Store> stores, List<Pit> pits)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Players = players;
             Stores = stores;
             Pits = pits;
