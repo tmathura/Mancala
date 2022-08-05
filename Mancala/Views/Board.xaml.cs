@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MancalaAssessment.Views
+namespace Mancala.Views
 {
     /// <summary>
     /// Interaction logic for Board.xaml

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MancalaAssessment\MancalaAssessment.csproj" />
+    <ProjectReference Include="..\Mancala\Mancala.csproj" />
   </ItemGroup>
 
 </Project>

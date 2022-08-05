@@ -1,7 +1,7 @@
-﻿<Application x:Class="MancalaAssessment.App"
+﻿<Application x:Class="Mancala.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MancalaAssessment"
+             xmlns:local="clr-namespace:Mancala"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
          

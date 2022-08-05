@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MancalaAssessment.Views
+namespace Mancala.Views
 {
     /// <summary>
     /// Interaction logic for Pit.xaml

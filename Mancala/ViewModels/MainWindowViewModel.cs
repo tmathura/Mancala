@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MancalaAssessment.ViewModels
+namespace Mancala.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {

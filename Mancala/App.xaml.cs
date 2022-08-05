@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MancalaAssessment
+namespace Mancala
 {
     /// <summary>
     /// Interaction logic for App.xaml

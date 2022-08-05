@@ -1,8 +1,8 @@
-﻿using MancalaAssessment.ViewModels;
+﻿using Mancala.ViewModels;
 using System;
 using System.Windows;
 
-namespace MancalaAssessment.Views
+namespace Mancala.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

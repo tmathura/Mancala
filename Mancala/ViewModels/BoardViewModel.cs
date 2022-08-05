@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace MancalaAssessment.ViewModels
+namespace Mancala.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
