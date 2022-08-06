@@ -73,6 +73,11 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <summary>
         /// Test a player taking a turn.
         /// </summary>
+        /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
+        /// <param name="playerId">The player id of the player who is sowing.</param>
+        /// <param name="expectedStores">The stores expected that must be asserted against.</param>
+        /// <param name="expectedPits">The pits expected that must be asserted against.</param>
+        /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
         [Theory]
         [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
         public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
@@ -104,6 +109,12 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <summary>
         /// Test a player taking a turn with a specific board setup.
         /// </summary>
+        /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
+        /// <param name="playerId">The player id of the player who is sowing.</param>
+        /// <param name="boardSetup">The starting board setup</param>
+        /// <param name="expectedStores">The stores expected that must be asserted against.</param>
+        /// <param name="expectedPits">The pits expected that must be asserted against.</param>
+        /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
         [Theory]
         [MemberData(nameof(TakePlayerTurn_WithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurn_WithASpecificBoardSetupData))]
         public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
