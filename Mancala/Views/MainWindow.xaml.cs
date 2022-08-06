@@ -13,6 +13,7 @@ namespace Mancala.Views
 
             _mainWindowViewModel = new MainWindowViewModel(boardBl);
 
+            PlayerOneNameTextBlock.DataContext = _mainWindowViewModel;
             BannerTextBlock.DataContext = _mainWindowViewModel;
             StoreOneTextBlock.DataContext = _mainWindowViewModel;
             Pit11.DataContext = _mainWindowViewModel;
@@ -28,11 +29,36 @@ namespace Mancala.Views
             Pit4.DataContext = _mainWindowViewModel;
             Pit5.DataContext = _mainWindowViewModel;
             StoreTwoTextBlock.DataContext = _mainWindowViewModel;
+            PlayerTwoNameTextBlock.DataContext = _mainWindowViewModel;
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)
         {
-            _mainWindowViewModel.StartNewGame("Player One", "Player Two");
+            var playerOneName = "";
+            var inputDialogPlayerOne = new InputDialog("Please enter your name:", "Player One");
+            if (inputDialogPlayerOne.ShowDialog() == true)
+            {
+                playerOneName = inputDialogPlayerOne.Answer;
+            }
+
+            if (string.IsNullOrWhiteSpace(playerOneName))
+            {
+                return;
+            }
+
+            var playerTwoName = "";
+            var inputDialogPlayerTwo = new InputDialog("Please enter your name:", "Player Two");
+            if (inputDialogPlayerTwo.ShowDialog() == true)
+            {
+                playerTwoName = inputDialogPlayerTwo.Answer;
+            }
+
+            if (string.IsNullOrWhiteSpace(playerTwoName))
+            {
+                return;
+            }
+
+            _mainWindowViewModel.StartNewGame(playerOneName, playerTwoName);
         }
     }
 }

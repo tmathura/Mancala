@@ -11,6 +11,7 @@ namespace Mancala.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly IBoardBl _boardBl;
+        public List<Player> Players => _boardBl.Board.Players;
         public List<Store> Stores => _boardBl.Board.Stores;
         public List<Pit> Pits => _boardBl.Board.Pits;
         public ICommand TakePlayerTurnCommand { get; set; }
