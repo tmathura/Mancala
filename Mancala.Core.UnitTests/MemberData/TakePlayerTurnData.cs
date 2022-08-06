@@ -29,7 +29,8 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (3, 1, 4, 9),
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
-                }
+                },
+                false
             };
             yield return new object[]
             {
@@ -54,7 +55,8 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (3, 1, 4, 9),
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
-                }
+                },
+                true
             };
             yield return new object[]
             {
@@ -79,7 +81,8 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (3, 1, 4, 9),
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
-                }
+                },
+                false
             };
             yield return new object[]
             {
@@ -104,7 +107,8 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (3, 1, 5, 9),
                     new (4, 1, 5, 10),
                     new (5, 1, 4, 11)
-                }
+                },
+                false
             };
             yield return new object[]
             {
@@ -129,7 +133,8 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (3, 1, 5, 9),
                     new (4, 1, 5, 10),
                     new (5, 1, 5, 11)
-                }
+                },
+                true
             };
         }
     }

@@ -24,32 +24,32 @@ namespace Mancala.Core.UnitTests.Implementations
             var playerNames = new List<string> { "Player One", "Player Two" };
 
             // Act
-            var board = _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
+            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
 
             // Assert
-            Assert.NotNull(board);
+            Assert.NotNull(_boardBl.Board);
 
-            Assert.NotNull(board.Players);
-            Assert.Equal(playerNames.Count, board.Players.Count);
+            Assert.NotNull(_boardBl.Board.Players);
+            Assert.Equal(playerNames.Count, _boardBl.Board.Players.Count);
 
-            Assert.NotNull(board.Stores);
-            Assert.Equal(2, board.Stores.Count);
+            Assert.NotNull(_boardBl.Board.Stores);
+            Assert.Equal(2, _boardBl.Board.Stores.Count);
 
-            Assert.NotNull(board.Pits);
-            Assert.Equal(12, board.Pits.Count);
+            Assert.NotNull(_boardBl.Board.Pits);
+            Assert.Equal(12, _boardBl.Board.Pits.Count);
 
             for (var playerId = 0; playerId < playerNames.Count; playerId++)
             {
-                var currentPlayer = board.Players[playerId];
+                var currentPlayer = _boardBl.Board.Players[playerId];
                 Assert.Equal(playerId, currentPlayer.Id);
                 Assert.Equal(playerNames[playerId], currentPlayer.PlayerName);
 
-                var currentBoard = board.Stores[playerId];
+                var currentBoard = _boardBl.Board.Stores[playerId];
                 Assert.Equal(playerId, currentBoard.Id);
                 Assert.Equal(playerId, currentBoard.PlayerId);
                 Assert.Equal(0, currentBoard.Seeds);
 
-                var currentPlayerPits = board.Pits.Where(pit => pit.PlayerId == playerId).ToList();
+                var currentPlayerPits = _boardBl.Board.Pits.Where(pit => pit.PlayerId == playerId).ToList();
                 Assert.Equal(6, currentPlayerPits.Count);
 
                 const int totalPitsPerPlayer = 6;
@@ -63,11 +63,11 @@ namespace Mancala.Core.UnitTests.Implementations
 
                     // Check that the sequence is correct within the list of pits
                     var pitSequence = currentPlayerPits[pitId].SequenceId;
-                    Assert.Equal(board.Pits.FindIndex(pit => pit.SequenceId == pitSequence), pitSequence);
+                    Assert.Equal(_boardBl.Board.Pits.FindIndex(pit => pit.SequenceId == pitSequence), pitSequence);
                 }
             }
 
-            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
+            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
         }
 
         /// <summary>
@@ -75,29 +75,30 @@ namespace Mancala.Core.UnitTests.Implementations
         /// </summary>
         [Theory]
         [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
-        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits)
+        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
         {
             // Act
-            var board = _boardBl.TakePlayerTurn(sequenceId, playerId);
-
+            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId);
+            
             // Assert
-            Assert.Equal(expectedStores.Count, board.Stores.Count);
+            Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
 
             // Check that the expected stores matched the actual stores
             for (var storeIndex = 0; storeIndex < expectedStores.Count; storeIndex++)
             {
-                expectedStores[storeIndex].Should().BeEquivalentTo(board.Stores[storeIndex]);
+                expectedStores[storeIndex].Should().BeEquivalentTo(_boardBl.Board.Stores[storeIndex]);
             }
             
-            Assert.Equal(expectedPits.Count, board.Pits.Count);
+            Assert.Equal(expectedPits.Count, _boardBl.Board.Pits.Count);
 
             // Check that the expected pits matched the actual pits
             for (var pitIndex = 0; pitIndex < expectedPits.Count; pitIndex++)
             {
-                expectedPits[pitIndex].Should().BeEquivalentTo(board.Pits[pitIndex]);
+                expectedPits[pitIndex].Should().BeEquivalentTo(_boardBl.Board.Pits[pitIndex]);
             }
 
-            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
+            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+            Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
         }
 
         /// <summary>
@@ -105,32 +106,33 @@ namespace Mancala.Core.UnitTests.Implementations
         /// </summary>
         [Theory]
         [MemberData(nameof(TakePlayerTurn_WithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurn_WithASpecificBoardSetupData))]
-        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits)
+        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
         {
             // Arrange
             _boardBl = new BoardBl(boardSetup);
 
             // Act
-            var board = _boardBl.TakePlayerTurn(sequenceId, playerId);
+            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId);
 
             // Assert
-            Assert.Equal(expectedStores.Count, board.Stores.Count);
+            Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
 
             // Check that the expected stores matched the actual stores
             for (var storeIndex = 0; storeIndex < expectedStores.Count; storeIndex++)
             {
-                expectedStores[storeIndex].Should().BeEquivalentTo(board.Stores[storeIndex]);
+                expectedStores[storeIndex].Should().BeEquivalentTo(_boardBl.Board.Stores[storeIndex]);
             }
 
-            Assert.Equal(expectedPits.Count, board.Pits.Count);
+            Assert.Equal(expectedPits.Count, _boardBl.Board.Pits.Count);
 
             // Check that the expected pits matched the actual pits
             for (var pitIndex = 0; pitIndex < expectedPits.Count; pitIndex++)
             {
-                expectedPits[pitIndex].Should().BeEquivalentTo(board.Pits[pitIndex]);
+                expectedPits[pitIndex].Should().BeEquivalentTo(_boardBl.Board.Pits[pitIndex]);
             }
             
-            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
+            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+            Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
         }
 
         /// <summary>

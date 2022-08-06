@@ -9,7 +9,7 @@ namespace Mancala.Core.Implementations
     /// <seealso cref="IBoardBl" />
     public class BoardBl : IBoardBl
     {
-        private Board _board = null!;
+        public Board Board { get; private set; } = null!;
 
         public BoardBl(Board? board)
         {
@@ -19,7 +19,7 @@ namespace Mancala.Core.Implementations
             }
             else
             {
-                _board = board;
+                Board = board;
             }
         }
 
@@ -29,7 +29,7 @@ namespace Mancala.Core.Implementations
         /// <param name="playerOneName">The name of the first player.</param>
         /// <param name="playerTwoName">The name of the second player.</param>
         /// <returns>A new instance of the <see cref="Board"/></returns>
-        public Board StartNewGame(string playerOneName, string playerTwoName)
+        public void StartNewGame(string playerOneName, string playerTwoName)
         {
             var players = new List<Player> { new( 0, playerOneName), new(1, playerTwoName) };
 
@@ -47,7 +47,7 @@ namespace Mancala.Core.Implementations
                 }
             }
 
-            return _board = new Board(players, stores, pits);
+            Board = new Board(players, stores, pits);
         }
 
         /// <summary>
@@ -55,18 +55,19 @@ namespace Mancala.Core.Implementations
         /// </summary>
         /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
         /// <param name="playerId">The player id of the player who is sowing.</param>
-        /// <returns>The current instance of the <see cref="Board"/></returns>
-        public Board TakePlayerTurn(int sequenceId, int playerId)
+        /// <returns>True or false if the player must take a turn again.</returns>
+        public bool TakePlayerTurn(int sequenceId, int playerId)
         {
             TakePlayerTurnValidation(sequenceId, playerId);
 
-            var selectedPit = _board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId);
+            var isLastSeedSowedInStore = false;
+            var selectedPit = Board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId);
             var selectedPitSeedCount = selectedPit?.Seeds;
             selectedPit!.Seeds = 0;
 
-            DistributePits(playerId, selectedPitSeedCount, sequenceId + 1);
+            DistributePits(playerId, selectedPitSeedCount, sequenceId + 1, ref isLastSeedSowedInStore);
 
-            return _board;
+            return isLastSeedSowedInStore;
         }
 
         /// <summary>
@@ -75,17 +76,22 @@ namespace Mancala.Core.Implementations
         /// <param name="playerId">The player id of the player who is sowing.</param>
         /// <param name="selectedPitSeedCount">The number of seeds to distribute.</param>
         /// <param name="skipIndex">At which index to start the for each loop.</param>
-        private void DistributePits(int playerId, int? selectedPitSeedCount, int skipIndex)
+        /// <param name="isLastSeedSowedInStore">Reference variable to see if the last seed sowed was in the store</param>
+        private void DistributePits(int playerId, int? selectedPitSeedCount, int skipIndex, ref bool isLastSeedSowedInStore)
         {
             if (selectedPitSeedCount > 0)
             {
-                foreach (var pit in _board.Pits.Skip(skipIndex))
+                foreach (var pit in Board.Pits.Skip(skipIndex))
                 {
                     if (selectedPitSeedCount > 0)
                     {
                         if (pit.PlayerId != playerId && pit.Id == 0)
                         {
-                            _board.Stores.FirstOrDefault(store => store.PlayerId == playerId)!.Seeds += 1;
+                            if (selectedPitSeedCount == 1)
+                            {
+                                isLastSeedSowedInStore = true;
+                            }
+                            Board.Stores.FirstOrDefault(store => store.PlayerId == playerId)!.Seeds += 1;
                             selectedPitSeedCount -= 1;
                         }
 
@@ -102,7 +108,7 @@ namespace Mancala.Core.Implementations
                     }
                 }
 
-                DistributePits(playerId, selectedPitSeedCount, 0);
+                DistributePits(playerId, selectedPitSeedCount, 0, ref isLastSeedSowedInStore);
             }
         }
 
@@ -113,12 +119,12 @@ namespace Mancala.Core.Implementations
         /// <param name="playerId">The player id of the player who is sowing.</param>
         private void TakePlayerTurnValidation(int sequenceId, int playerId)
         {
-            if (_board == null)
+            if (Board == null)
             {
                 throw new NullReferenceException("The board is not instantiated.");
             }
 
-            var selectedPit = _board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId && pit.PlayerId == playerId);
+            var selectedPit = Board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId && pit.PlayerId == playerId);
 
             if (selectedPit == null)
             {
