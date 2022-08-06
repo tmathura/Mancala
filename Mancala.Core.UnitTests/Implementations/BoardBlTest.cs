@@ -6,11 +6,11 @@ namespace Mancala.Core.UnitTests.Implementations
 {
     public class BoardBlTest
     {
-        private readonly BoardBl _boardBl;
+        private BoardBl _boardBl;
 
         public BoardBlTest()
         {
-            _boardBl = new BoardBl();
+            _boardBl = new BoardBl(null);
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Mancala.Core.UnitTests.Implementations
         public void StartNewGame()
         {
             // Arrange
-            var playerNames = new List<string> { "Player 1", "Player 2" };
+            var playerNames = new List<string> { "Player One", "Player Two" };
 
             // Act
             var board = _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
@@ -65,6 +65,8 @@ namespace Mancala.Core.UnitTests.Implementations
                     Assert.Equal(board.Pits.FindIndex(pit => pit.SequenceId == pitSequence), pitSequence);
                 }
             }
+
+            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
         }
 
         /// <summary>
@@ -74,10 +76,6 @@ namespace Mancala.Core.UnitTests.Implementations
         [MemberData(nameof(BoardBlTestMemberData.TakePlayerTurnData), MemberType = typeof(BoardBlTestMemberData))]
         public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits)
         {
-            // Arrange
-            var playerNames = new List<string> { "Player 1", "Player 2" };
-            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
-
             // Act
             var board = _boardBl.TakePlayerTurn(sequenceId, playerId);
 
@@ -97,20 +95,41 @@ namespace Mancala.Core.UnitTests.Implementations
             {
                 expectedPits[pitIndex].Should().BeEquivalentTo(board.Pits[pitIndex]);
             }
+
+            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
         }
 
         /// <summary>
-        /// Test that when a player takes a turn and the game is not started an error is thrown.
+        /// Test a player taking a turn with a specific board setup.
         /// </summary>
-        [Fact]
-        public void TakePlayerTurn_Error_GameNotStarted()
+        [Theory]
+        [MemberData(nameof(BoardBlTestMemberData.TakePlayerTurn_WithASpecificBoardSetupData), MemberType = typeof(BoardBlTestMemberData))]
+        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits)
         {
+            // Arrange
+            _boardBl = new BoardBl(boardSetup);
+
             // Act
-            void Action() => _boardBl.TakePlayerTurn(0, 0);
+            var board = _boardBl.TakePlayerTurn(sequenceId, playerId);
 
             // Assert
-            var exception = Assert.Throws<NullReferenceException>(Action);
-            Assert.Equal("The board is not instantiated.", exception.Message);
+            Assert.Equal(expectedStores.Count, board.Stores.Count);
+
+            // Check that the expected stores matched the actual stores
+            for (var storeIndex = 0; storeIndex < expectedStores.Count; storeIndex++)
+            {
+                expectedStores[storeIndex].Should().BeEquivalentTo(board.Stores[storeIndex]);
+            }
+
+            Assert.Equal(expectedPits.Count, board.Pits.Count);
+
+            // Check that the expected pits matched the actual pits
+            for (var pitIndex = 0; pitIndex < expectedPits.Count; pitIndex++)
+            {
+                expectedPits[pitIndex].Should().BeEquivalentTo(board.Pits[pitIndex]);
+            }
+            
+            Assert.Equal(48, board.Stores.Sum(store => store.Seeds) + board.Pits.Sum(pit => pit.Seeds));
         }
 
         /// <summary>
@@ -119,10 +138,6 @@ namespace Mancala.Core.UnitTests.Implementations
         [Fact]
         public void TakePlayerTurn_Error_InvalidPitSelected()
         {
-            // Arrange
-            var playerNames = new List<string> { "Player 1", "Player 2" };
-            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
-
             // Act
             void Action() => _boardBl.TakePlayerTurn(0, 1);
 
@@ -138,8 +153,6 @@ namespace Mancala.Core.UnitTests.Implementations
         public void TakePlayerTurn_Error_PitHasNoSeed()
         {
             // Arrange
-            var playerNames = new List<string> { "Player 1", "Player 2" };
-            _boardBl.StartNewGame(playerNames.First(), playerNames.Last());
             _boardBl.TakePlayerTurn(0, 0);
 
             // Act

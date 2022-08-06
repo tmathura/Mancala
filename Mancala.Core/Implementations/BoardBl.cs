@@ -11,6 +11,18 @@ namespace Mancala.Core.Implementations
     {
         private Board _board = null!;
 
+        public BoardBl(Board? board)
+        {
+            if (board == null)
+            {
+                StartNewGame("Player 1", "Player 2");
+            }
+            else
+            {
+                _board = board;
+            }
+        }
+
         /// <summary>
         /// Starts a new instance of the game.
         /// </summary>
@@ -48,22 +60,30 @@ namespace Mancala.Core.Implementations
         {
             TakePlayerTurnValidation(sequenceId, playerId);
 
-            var skipIndex = sequenceId;
-            var selectedPitSeedCount = _board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId)?.Seeds;
+            var selectedPit = _board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId);
+            var selectedPitSeedCount = selectedPit?.Seeds;
+            selectedPit!.Seeds = 0;
 
-            while (selectedPitSeedCount > 0)
+            DistributePits(playerId, selectedPitSeedCount, sequenceId + 1);
+
+            return _board;
+        }
+
+        /// <summary>
+        /// Distributes the pits across the board.
+        /// </summary>
+        /// <param name="playerId">The player id of the player who is sowing.</param>
+        /// <param name="selectedPitSeedCount">The number of seeds to distribute.</param>
+        /// <param name="skipIndex">At which index to start the for each loop.</param>
+        private void DistributePits(int playerId, int? selectedPitSeedCount, int skipIndex)
+        {
+            if (selectedPitSeedCount > 0)
             {
                 foreach (var pit in _board.Pits.Skip(skipIndex))
                 {
-                    if (pit.SequenceId == sequenceId)
-                    {
-                        pit.Seeds = 0;
-                        continue;
-                    }
-
                     if (selectedPitSeedCount > 0)
                     {
-                        if (pit.PlayerId != playerId)
+                        if (pit.PlayerId != playerId && pit.Id == 0)
                         {
                             _board.Stores.FirstOrDefault(store => store.PlayerId == playerId)!.Seeds += 1;
                             selectedPitSeedCount -= 1;
@@ -82,10 +102,8 @@ namespace Mancala.Core.Implementations
                     }
                 }
 
-                skipIndex = 0;
+                DistributePits(playerId, selectedPitSeedCount, 0);
             }
-
-            return _board;
         }
 
         /// <summary>
