@@ -9,6 +9,6 @@
         }
 
         public int Id { get; }
-        public string PlayerName { get; }
+        public string PlayerName { get; set; }
     }
 }

@@ -9,18 +9,13 @@ namespace Mancala.Core.Implementations
     /// <seealso cref="IBoardBl" />
     public class BoardBl : IBoardBl
     {
-        public Board Board { get; private set; } = null!;
+        public Board Board { get; }
 
         public BoardBl(Board? board)
         {
-            if (board == null)
-            {
-                StartNewGame("Player 1", "Player 2");
-            }
-            else
-            {
-                Board = board;
-            }
+            board ??= SetUpDefaultBoard();
+
+            Board = board;
         }
 
         /// <summary>
@@ -28,10 +23,29 @@ namespace Mancala.Core.Implementations
         /// </summary>
         /// <param name="playerOneName">The name of the first player.</param>
         /// <param name="playerTwoName">The name of the second player.</param>
-        /// <returns>A new instance of the <see cref="Board"/></returns>
         public void StartNewGame(string playerOneName, string playerTwoName)
         {
-            var players = new List<Player> { new(0, playerOneName), new(1, playerTwoName) };
+            Board.Players[0].PlayerName = playerOneName;
+            Board.Players[1].PlayerName = playerTwoName;
+
+            foreach (var store in Board.Stores)
+            {
+                store.Seeds = 0;
+            }
+
+            foreach (var pit in Board.Pits)
+            {
+                pit.Seeds = 4;
+            }
+        }
+
+        /// <summary>
+        /// Set up the default board.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="Board"/></returns>
+        private static Board SetUpDefaultBoard()
+        {
+            var players = new List<Player> { new(0, "Player 1"), new(1, "Player 2") };
 
             var stores = new List<Store>();
             var pits = new List<Pit>();
@@ -47,7 +61,7 @@ namespace Mancala.Core.Implementations
                 }
             }
 
-            Board = new Board(players, stores, pits);
+            return new Board(players, stores, pits);
         }
 
         /// <summary>
@@ -190,7 +204,7 @@ namespace Mancala.Core.Implementations
 
             if (selectedPit.Seeds <= 0)
             {
-                throw new Exception("The selected pit has no seed.");
+                throw new Exception("The selected pit has no seeds.");
             }
         }
     }

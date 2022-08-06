@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala", "Mancala\Mancala.csproj", "{D49D3129-B817-4E75-AA44-8679264C57F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala", "Mancala\Mancala.csproj", "{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MancalaTests", "MancalaTests\MancalaTests.csproj", "{6D3C0D49-2098-47B1-9355-474024839E6C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala.Domain", "Mancala.Domain\Mancala.Domain.csproj", "{03BF4AB3-75D9-4CD9-BDCF-10A4AB6EB57C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mancala.Core", "Mancala.Core\Mancala.Core.csproj", "{AC502E70-98B7-43E4-9F10-B6F2AF093B6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala.Core", "Mancala.Core\Mancala.Core.csproj", "{AC502E70-98B7-43E4-9F10-B6F2AF093B6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mancala.Core.UnitTests", "Mancala.Core.UnitTests\Mancala.Core.UnitTests.csproj", "{7FB9D16E-2AC5-4C12-AF56-6BC5067D4B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala.Core.UnitTests", "Mancala.Core.UnitTests\Mancala.Core.UnitTests.csproj", "{7FB9D16E-2AC5-4C12-AF56-6BC5067D4B3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D49D3129-B817-4E75-AA44-8679264C57F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D49D3129-B817-4E75-AA44-8679264C57F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D49D3129-B817-4E75-AA44-8679264C57F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D49D3129-B817-4E75-AA44-8679264C57F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D3C0D49-2098-47B1-9355-474024839E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D3C0D49-2098-47B1-9355-474024839E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D3C0D49-2098-47B1-9355-474024839E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU

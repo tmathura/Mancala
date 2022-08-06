@@ -182,7 +182,7 @@ namespace Mancala.Core.UnitTests.Implementations
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);
-            Assert.Equal("The selected pit has no seed.", exception.Message);
+            Assert.Equal("The selected pit has no seeds.", exception.Message);
         }
     }
 }

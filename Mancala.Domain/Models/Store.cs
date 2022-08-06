@@ -1,7 +1,12 @@
-﻿namespace Mancala.Domain.Models
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace Mancala.Domain.Models
 {
-    public class Store
+    public class Store : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public Store(int id, int playerId, int seeds)
         {
             Id = id;
@@ -11,6 +16,21 @@
 
         public int Id { get; }
         public int PlayerId { get; }
-        public int Seeds { get; set; }
+
+        private int _seeds;
+        public int Seeds
+        {
+            get => _seeds;
+            set
+            {
+                _seeds = value;
+                OnPropertyChanged();
+            }
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

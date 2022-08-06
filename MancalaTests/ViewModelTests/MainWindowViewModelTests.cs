@@ -9,7 +9,7 @@ namespace MancalaTests.ViewModelTests
         [TestMethod]
         public void BannerText_DefaultValue()
         {
-            Assert.AreEqual("Click \"New Game\" to get started!", new MainWindowViewModel().BannerText);
+            Assert.AreEqual("Click \"New Game\" to get started!", new MainWindowViewModel(null!).BannerText);
         }
     }
 }
