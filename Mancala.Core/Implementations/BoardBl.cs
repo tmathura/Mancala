@@ -61,23 +61,23 @@ namespace Mancala.Core.Implementations
             TakePlayerTurnValidation(sequenceId, playerId);
 
             var isLastSeedSowedInStore = false;
-            var selectedPit = Board.Pits.FirstOrDefault(pit => pit.SequenceId == sequenceId);
-            var selectedPitSeedCount = selectedPit?.Seeds;
-            selectedPit!.Seeds = 0;
+            var selectedPit = Board.Pits.First(pit => pit.SequenceId == sequenceId);
+            var selectedPitSeedCount = selectedPit.Seeds;
+            selectedPit.Seeds = 0;
 
-            DistributePits(playerId, selectedPitSeedCount, sequenceId + 1, ref isLastSeedSowedInStore);
+            DistributeSeeds(playerId, selectedPitSeedCount, sequenceId + 1, ref isLastSeedSowedInStore);
 
             return isLastSeedSowedInStore;
         }
 
         /// <summary>
-        /// Distributes the pits across the board.
+        /// Distribute the seeds across the pits on the board.
         /// </summary>
         /// <param name="playerId">The player id of the player who is sowing.</param>
         /// <param name="selectedPitSeedCount">The number of seeds to distribute.</param>
         /// <param name="skipIndex">At which index to start the for each loop.</param>
         /// <param name="isLastSeedSowedInStore">Reference variable to see if the last seed sowed was in the store</param>
-        private void DistributePits(int playerId, int? selectedPitSeedCount, int skipIndex, ref bool isLastSeedSowedInStore)
+        private void DistributeSeeds(int playerId, int? selectedPitSeedCount, int skipIndex, ref bool isLastSeedSowedInStore)
         {
             if (selectedPitSeedCount > 0)
             {
@@ -91,14 +91,26 @@ namespace Mancala.Core.Implementations
                             {
                                 isLastSeedSowedInStore = true;
                             }
-                            Board.Stores.FirstOrDefault(store => store.PlayerId == playerId)!.Seeds += 1;
+                            Board.Stores.First(store => store.PlayerId == playerId).Seeds += 1;
                             selectedPitSeedCount -= 1;
                         }
 
                         if (selectedPitSeedCount > 0)
                         {
-                            pit.Seeds += 1;
-                            selectedPitSeedCount -= 1;
+                            var correspondingOpponentPitSequenceId = Board.Pits.Count - pit.SequenceId - 1;
+                            var correspondingOpponentPit = Board.Pits.First(opponentPit => opponentPit.SequenceId == correspondingOpponentPitSequenceId);
+
+                            if (pit.PlayerId == playerId && pit.Seeds == 0 && correspondingOpponentPit.Seeds > 0 && selectedPitSeedCount == 1)
+                            {
+                                Board.Stores.First(store => store.PlayerId == playerId).Seeds += 1 + correspondingOpponentPit.Seeds;
+                                correspondingOpponentPit.Seeds = 0;
+                                selectedPitSeedCount -= 1;
+                            }
+                            else
+                            {
+                                pit.Seeds += 1;
+                                selectedPitSeedCount -= 1;
+                            }
                         }
                     }
 
@@ -108,7 +120,7 @@ namespace Mancala.Core.Implementations
                     }
                 }
 
-                DistributePits(playerId, selectedPitSeedCount, 0, ref isLastSeedSowedInStore);
+                DistributeSeeds(playerId, selectedPitSeedCount, 0, ref isLastSeedSowedInStore);
             }
         }
 
