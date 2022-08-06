@@ -78,13 +78,15 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedStores">The stores expected that must be asserted against.</param>
         /// <param name="expectedPits">The pits expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
+        /// <param name="expectedIsGameOver">The expected boolean if the game is over or not.</param>
+        /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
         [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
-        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
+        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Act
-            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId);
-            
+            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
+
             // Assert
             Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
 
@@ -93,7 +95,7 @@ namespace Mancala.Core.UnitTests.Implementations
             {
                 expectedStores[storeIndex].Should().BeEquivalentTo(_boardBl.Board.Stores[storeIndex]);
             }
-            
+
             Assert.Equal(expectedPits.Count, _boardBl.Board.Pits.Count);
 
             // Check that the expected pits matched the actual pits
@@ -104,6 +106,8 @@ namespace Mancala.Core.UnitTests.Implementations
 
             Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
+            Assert.Equal(expectedIsGameOver, isGameOver);
+            Assert.Equal(expectedWinningPlayerId, winningPlayerId);
         }
 
         /// <summary>
@@ -115,15 +119,17 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedStores">The stores expected that must be asserted against.</param>
         /// <param name="expectedPits">The pits expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
+        /// <param name="expectedIsGameOver">The expected boolean if the game is over or not.</param>
+        /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
-        [MemberData(nameof(TakePlayerTurn_WithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurn_WithASpecificBoardSetupData))]
-        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain)
+        [MemberData(nameof(TakePlayerTurnWithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurnWithASpecificBoardSetupData))]
+        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Arrange
             _boardBl = new BoardBl(boardSetup);
 
             // Act
-            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId);
+            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
 
             // Assert
             Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
@@ -141,9 +147,11 @@ namespace Mancala.Core.UnitTests.Implementations
             {
                 expectedPits[pitIndex].Should().BeEquivalentTo(_boardBl.Board.Pits[pitIndex]);
             }
-            
+
             Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
+            Assert.Equal(expectedIsGameOver, isGameOver);
+            Assert.Equal(expectedWinningPlayerId, winningPlayerId);
         }
 
         /// <summary>
@@ -153,7 +161,7 @@ namespace Mancala.Core.UnitTests.Implementations
         public void TakePlayerTurn_Error_InvalidPitSelected()
         {
             // Act
-            void Action() => _boardBl.TakePlayerTurn(0, 1);
+            void Action() => _boardBl.TakePlayerTurn(0, 1, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);
@@ -167,10 +175,10 @@ namespace Mancala.Core.UnitTests.Implementations
         public void TakePlayerTurn_Error_PitHasNoSeed()
         {
             // Arrange
-            _boardBl.TakePlayerTurn(0, 0);
+            _boardBl.TakePlayerTurn(0, 0, out _, out _);
 
             // Act
-            void Action() => _boardBl.TakePlayerTurn(0, 0);
+            void Action() => _boardBl.TakePlayerTurn(0, 0, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);

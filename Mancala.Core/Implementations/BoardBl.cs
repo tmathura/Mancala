@@ -31,7 +31,7 @@ namespace Mancala.Core.Implementations
         /// <returns>A new instance of the <see cref="Board"/></returns>
         public void StartNewGame(string playerOneName, string playerTwoName)
         {
-            var players = new List<Player> { new( 0, playerOneName), new(1, playerTwoName) };
+            var players = new List<Player> { new(0, playerOneName), new(1, playerTwoName) };
 
             var stores = new List<Store>();
             var pits = new List<Pit>();
@@ -55,8 +55,10 @@ namespace Mancala.Core.Implementations
         /// </summary>
         /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
         /// <param name="playerId">The player id of the player who is sowing.</param>
+        /// <param name="isGameOver">Out parameter to see if the game is over.</param>
+        /// <param name="winningPlayerId">Out parameter of the winners player id.</param>
         /// <returns>True or false if the player must take a turn again.</returns>
-        public bool TakePlayerTurn(int sequenceId, int playerId)
+        public bool TakePlayerTurn(int sequenceId, int playerId, out bool isGameOver, out int? winningPlayerId)
         {
             TakePlayerTurnValidation(sequenceId, playerId);
 
@@ -66,6 +68,8 @@ namespace Mancala.Core.Implementations
             selectedPit.Seeds = 0;
 
             DistributeSeeds(playerId, selectedPitSeedCount, sequenceId + 1, ref isLastSeedSowedInStore);
+
+            isGameOver = CheckIfGameIsOver(out winningPlayerId);
 
             return isLastSeedSowedInStore;
         }
@@ -122,6 +126,47 @@ namespace Mancala.Core.Implementations
 
                 DistributeSeeds(playerId, selectedPitSeedCount, 0, ref isLastSeedSowedInStore);
             }
+        }
+
+        /// <summary>
+        /// Checks if the game is over.
+        /// </summary>
+        /// <param name="winningPlayerId">Out parameter of the winners player id.</param>
+        private bool CheckIfGameIsOver(out int? winningPlayerId)
+        {
+            winningPlayerId = null;
+            var isGameOver = false;
+
+            var playerOnePitSeedsCount = Board.Pits.Where(pit => pit.PlayerId == 0).Sum(pit => pit.Seeds);
+            var playerTwoPitSeedsCount = Board.Pits.Where(pit => pit.PlayerId == 1).Sum(pit => pit.Seeds);
+
+            if (playerOnePitSeedsCount == 0 || playerTwoPitSeedsCount == 0)
+            {
+                foreach (var pit in Board.Pits.Where(pit => pit.Seeds > 0))
+                {
+                    Board.Stores.First(store => store.PlayerId == pit.PlayerId).Seeds += pit.Seeds;
+                    pit.Seeds = 0;
+                }
+
+                isGameOver = true;
+            }
+
+            if (isGameOver)
+            {
+                var playerOneStoreSeedsCount = Board.Stores.Where(pit => pit.PlayerId == 0).Sum(pit => pit.Seeds);
+                var playerTwoStoreSeedsCount = Board.Stores.Where(pit => pit.PlayerId == 1).Sum(pit => pit.Seeds);
+
+                if (playerOneStoreSeedsCount > playerTwoStoreSeedsCount)
+                {
+                    winningPlayerId = 0;
+                }
+                else if (playerTwoStoreSeedsCount > playerOneStoreSeedsCount)
+                {
+                    winningPlayerId = 1;
+                }
+            }
+
+            return isGameOver;
         }
 
         /// <summary>

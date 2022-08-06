@@ -6,7 +6,7 @@ namespace Mancala.Core.UnitTests.MemberData
     {
         public static IEnumerable<object?[]> GetData()
         {
-            yield return new object[]
+            yield return new object?[]
             {
                 1,
                 0,
@@ -30,9 +30,11 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
                 },
-                false
+                false,
+                false,
+                null
             };
-            yield return new object[]
+            yield return new object?[]
             {
                 2,
                 0,
@@ -56,9 +58,11 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
                 },
-                true
+                true,
+                false,
+                null
             };
-            yield return new object[]
+            yield return new object?[]
             {
                 3,
                 0,
@@ -82,9 +86,11 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (4, 1, 4, 10),
                     new (5, 1, 4, 11)
                 },
-                false
+                false,
+                false,
+                null
             };
-            yield return new object[]
+            yield return new object?[]
             {
                 6,
                 1,
@@ -108,9 +114,11 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (4, 1, 5, 10),
                     new (5, 1, 4, 11)
                 },
-                false
+                false,
+                false,
+                null
             };
-            yield return new object[]
+            yield return new object?[]
             {
                 8,
                 1,
@@ -134,7 +142,9 @@ namespace Mancala.Core.UnitTests.MemberData
                     new (4, 1, 5, 10),
                     new (5, 1, 5, 11)
                 },
-                true
+                true,
+                false,
+                null
             };
         }
     }
