@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Mancala.Core.Implementations;
+using Mancala.Core.UnitTests.MemberData;
 using Mancala.Domain.Models;
 
 namespace Mancala.Core.UnitTests.Implementations
@@ -73,7 +74,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// Test a player taking a turn.
         /// </summary>
         [Theory]
-        [MemberData(nameof(BoardBlTestMemberData.TakePlayerTurnData), MemberType = typeof(BoardBlTestMemberData))]
+        [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
         public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits)
         {
             // Act
@@ -103,7 +104,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// Test a player taking a turn with a specific board setup.
         /// </summary>
         [Theory]
-        [MemberData(nameof(BoardBlTestMemberData.TakePlayerTurn_WithASpecificBoardSetupData), MemberType = typeof(BoardBlTestMemberData))]
+        [MemberData(nameof(TakePlayerTurn_WithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurn_WithASpecificBoardSetupData))]
         public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits)
         {
             // Arrange
