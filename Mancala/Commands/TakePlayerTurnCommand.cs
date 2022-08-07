@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Mancala
+namespace Mancala.Commands
 {
     public class TakePlayerTurnCommand : ICommand
     {
