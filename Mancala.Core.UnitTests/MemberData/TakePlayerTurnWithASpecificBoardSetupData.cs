@@ -11,7 +11,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 11,
                 1,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", false), new(1, "Player Two", true) },
                     new List<Store> { new(0, 0, 19), new(1, 1, 19) },
                     new List<Pit>
                     {
@@ -29,6 +29,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 10, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", true),
+                    new(1, "Player Two", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 19),
@@ -58,7 +63,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 9,
                 1,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", false), new(1, "Player Two", true) },
                     new List<Store> { new(0, 0, 20), new(1, 1, 12) },
                     new List<Pit>
                     {
@@ -76,6 +81,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 0, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", false),
+                    new(1, "Player Two", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 20),
@@ -105,7 +115,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 5,
                 0,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", true), new(1, "Player Two", false) },
                     new List<Store> { new(0, 0, 19), new(1, 1, 19) },
                     new List<Pit>
                     {
@@ -123,6 +133,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 0, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", false),
+                    new(1, "Player Two", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 22),
@@ -152,7 +167,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 3,
                 0,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", true), new(1, "Player Two", false) },
                     new List<Store> { new(0, 0, 0), new(1, 1, 0) },
                     new List<Pit>
                     {
@@ -170,6 +185,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 0, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", false),
+                    new(1, "Player Two", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 4),
@@ -199,7 +219,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 8,
                 1,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", false), new(1, "Player Two", true) },
                     new List<Store> { new(0, 0, 20), new(1, 1, 20) },
                     new List<Pit>
                     {
@@ -217,6 +237,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 0, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", true),
+                    new(1, "Player Two", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 20),
@@ -246,7 +271,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 5,
                 0,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", true), new(1, "Player Two", false) },
                     new List<Store> { new(0, 0, 20), new(1, 1, 3) },
                     new List<Pit>
                     {
@@ -264,6 +289,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 2, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", true),
+                    new(1, "Player Two", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 21),
@@ -293,7 +323,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 11,
                 1,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", false), new(1, "Player Two", true) },
                     new List<Store> { new(0, 0, 3), new(1, 1, 20) },
                     new List<Pit>
                     {
@@ -311,6 +341,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 1, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", false),
+                    new(1, "Player Two", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 27),
@@ -340,7 +375,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 11,
                 1,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", false), new(1, "Player Two", true) },
                     new List<Store> { new(0, 0, 12), new(1, 1, 24) },
                     new List<Pit>
                     {
@@ -358,6 +393,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 1, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", false),
+                    new(1, "Player Two", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 23),
@@ -389,7 +429,7 @@ namespace Mancala.Core.UnitTests.MemberData
                 5,
                 0,
                 new Board(
-                    new List<Player> { new(0, "Player One"), new(1, "Player Two") },
+                    new List<Player> { new(0, "Player One", true), new(1, "Player Two", false) },
                     new List<Store> { new(0, 0, 23), new(1, 1, 23) },
                     new List<Pit>
                     {
@@ -407,6 +447,11 @@ namespace Mancala.Core.UnitTests.MemberData
                         new (5, 1, 0, 11)
                     }
                 ),
+                new List<Player>
+                {
+                    new(0, "Player One", true),
+                    new(1, "Player Two", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 24),

@@ -28,6 +28,11 @@ namespace Mancala.Core.Implementations
             Board.Players[0].PlayerName = playerOneName;
             Board.Players[1].PlayerName = playerTwoName;
 
+            foreach (var player in Board.Players)
+            {
+                player.Enabled = true;
+            }
+
             foreach (var store in Board.Stores)
             {
                 store.Seeds = 0;
@@ -45,7 +50,7 @@ namespace Mancala.Core.Implementations
         /// <returns>A new instance of the <see cref="Board"/></returns>
         private static Board SetUpDefaultBoard()
         {
-            var players = new List<Player> { new(0, "Player 1"), new(1, "Player 2") };
+            var players = new List<Player> { new(0, "Player 1", true), new(1, "Player 2", true) };
 
             var stores = new List<Store>();
             var pits = new List<Pit>();
@@ -60,7 +65,7 @@ namespace Mancala.Core.Implementations
                     pits.Add(new Pit(pit, player.Id, 4, pits.Count));
                 }
             }
-
+            
             return new Board(players, stores, pits);
         }
 
@@ -84,6 +89,21 @@ namespace Mancala.Core.Implementations
             DistributeSeeds(playerId, selectedPitSeedCount, sequenceId + 1, ref isLastSeedSowedInStore);
 
             isGameOver = CheckIfGameIsOver(out winningPlayerId);
+
+            if (isLastSeedSowedInStore)
+            {
+                foreach (var player in Board.Players)
+                {
+                    player.Enabled = player.Id == playerId;
+                }
+            }
+            else
+            {
+                foreach (var player in Board.Players)
+                {
+                    player.Enabled = player.Id != playerId;
+                }
+            }
 
             return isLastSeedSowedInStore;
         }

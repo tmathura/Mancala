@@ -10,6 +10,11 @@ namespace Mancala.Core.UnitTests.MemberData
             {
                 1,
                 0,
+                new List<Player>
+                {
+                    new(0, "Player 1", false),
+                    new(1, "Player 2", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 0),
@@ -38,6 +43,11 @@ namespace Mancala.Core.UnitTests.MemberData
             {
                 2,
                 0,
+                new List<Player>
+                {
+                    new(0, "Player 1", true),
+                    new(1, "Player 2", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 1),
@@ -66,6 +76,11 @@ namespace Mancala.Core.UnitTests.MemberData
             {
                 3,
                 0,
+                new List<Player>
+                {
+                    new(0, "Player 1", false),
+                    new(1, "Player 2", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 1),
@@ -94,6 +109,11 @@ namespace Mancala.Core.UnitTests.MemberData
             {
                 6,
                 1,
+                new List<Player>
+                {
+                    new(0, "Player 1", true),
+                    new(1, "Player 2", false)
+                },
                 new List<Store>
                 {
                     new(0, 0, 0),
@@ -122,6 +142,11 @@ namespace Mancala.Core.UnitTests.MemberData
             {
                 8,
                 1,
+                new List<Player>
+                {
+                    new(0, "Player 1", false),
+                    new(1, "Player 2", true)
+                },
                 new List<Store>
                 {
                     new(0, 0, 0),

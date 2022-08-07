@@ -75,6 +75,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// </summary>
         /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
         /// <param name="playerId">The player id of the player who is sowing.</param>
+        /// <param name="expectedPlayers">The players expected that must be asserted against.</param>
         /// <param name="expectedStores">The stores expected that must be asserted against.</param>
         /// <param name="expectedPits">The pits expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
@@ -82,12 +83,20 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
         [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
-        public void TakePlayerTurn(int sequenceId, int playerId, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        public void TakePlayerTurn(int sequenceId, int playerId, List<Player> expectedPlayers, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Act
             var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
 
             // Assert
+            Assert.Equal(expectedPlayers.Count, _boardBl.Board.Players.Count);
+
+            // Check that the expected players matched the actual players
+            for (var playerIndex = 0; playerIndex < expectedPlayers.Count; playerIndex++)
+            {
+                expectedPlayers[playerIndex].Should().BeEquivalentTo(_boardBl.Board.Players[playerIndex]);
+            }
+
             Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
 
             // Check that the expected stores matched the actual stores
@@ -116,6 +125,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
         /// <param name="playerId">The player id of the player who is sowing.</param>
         /// <param name="boardSetup">The starting board setup</param>
+        /// <param name="expectedPlayers">The players expected that must be asserted against.</param>
         /// <param name="expectedStores">The stores expected that must be asserted against.</param>
         /// <param name="expectedPits">The pits expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
@@ -123,7 +133,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
         [MemberData(nameof(TakePlayerTurnWithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurnWithASpecificBoardSetupData))]
-        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, List<Player> expectedPlayers, List<Store> expectedStores, List<Pit> expectedPits, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Arrange
             _boardBl = new BoardBl(boardSetup);
@@ -132,6 +142,14 @@ namespace Mancala.Core.UnitTests.Implementations
             var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
 
             // Assert
+            Assert.Equal(expectedPlayers.Count, _boardBl.Board.Players.Count);
+
+            // Check that the expected players matched the actual players
+            for (var playerIndex = 0; playerIndex < expectedPlayers.Count; playerIndex++)
+            {
+                expectedPlayers[playerIndex].Should().BeEquivalentTo(_boardBl.Board.Players[playerIndex]);
+            }
+
             Assert.Equal(expectedStores.Count, _boardBl.Board.Stores.Count);
 
             // Check that the expected stores matched the actual stores

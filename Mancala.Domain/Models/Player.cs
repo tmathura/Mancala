@@ -7,10 +7,11 @@ namespace Mancala.Domain.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public Player(int id, string playerName)
+        public Player(int id, string playerName, bool enabled)
         {
             Id = id;
-            PlayerName = playerName;
+            _playerName = playerName;
+            Enabled = enabled;
         }
 
         public int Id { get; }
@@ -22,6 +23,17 @@ namespace Mancala.Domain.Models
             set
             {
                 _playerName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _enabled;
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
                 OnPropertyChanged();
             }
         }

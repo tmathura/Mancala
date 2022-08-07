@@ -3,6 +3,7 @@ using Mancala.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -26,7 +27,16 @@ namespace Mancala.ViewModels
         {
             try
             {
-                _boardBl.TakePlayerTurn(pit.SequenceId, pit.PlayerId, out _, out _);
+                var takePlayerTurnAgain = _boardBl.TakePlayerTurn(pit.SequenceId, pit.PlayerId, out _, out _);
+
+                if (takePlayerTurnAgain)
+                {
+                    BannerText = $"{Players.First(player => player.Id == pit.PlayerId).PlayerName} can play again.";
+                }
+                else
+                {
+                    BannerText = $"{Players.First(player => player.Id != pit.PlayerId).PlayerName} it is your turn now.";
+                }
             }
             catch (Exception e)
             {
