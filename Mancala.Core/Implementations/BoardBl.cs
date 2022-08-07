@@ -48,7 +48,7 @@ namespace Mancala.Core.Implementations
         /// <summary>
         /// Set up the default board.
         /// </summary>
-        /// <returns>A new instance of the <see cref="Board"/></returns>
+        /// <returns>A new instance of the <see cref="Domain.Models.Board"/></returns>
         private static Board SetUpDefaultBoard()
         {
             var players = new List<Player> { new(0, "Player 1", true), new(1, "Player 2", true) };
@@ -236,11 +236,16 @@ namespace Mancala.Core.Implementations
             }
         }
 
+        /// <summary>
+        /// Get the corresponding opponent pit.
+        /// </summary>
+        /// <param name="board">The current board.</param>
+        /// <param name="pit">The pit that you want to get the corresponding opponent pit of.</param>
+        /// <returns>The opponent <see cref="Pit"/>.</returns>
         private static Pit GetCorrespondingOpponentPit(Board board, Pit pit)
         {
             var correspondingOpponentPitSequenceId = board.Pits.Count - pit.SequenceId - 1;
-            var correspondingOpponentPit =
-                board.Pits.First(opponentPit => opponentPit.SequenceId == correspondingOpponentPitSequenceId);
+            var correspondingOpponentPit = board.Pits.First(opponentPit => opponentPit.SequenceId == correspondingOpponentPitSequenceId);
             return correspondingOpponentPit;
         }
 
@@ -256,10 +261,12 @@ namespace Mancala.Core.Implementations
             var playerOnePitSeedsCount = Board.Pits.Where(pit => pit.PlayerId == 0).Sum(pit => pit.Seeds);
             var playerTwoPitSeedsCount = Board.Pits.Where(pit => pit.PlayerId == 1).Sum(pit => pit.Seeds);
 
+            // If either players pits are completely empty, then mark the game as over and distribute the remaining seeds to the relevant player
             if (playerOnePitSeedsCount == 0 || playerTwoPitSeedsCount == 0)
             {
                 foreach (var pit in Board.Pits.Where(pit => pit.Seeds > 0))
                 {
+                    // Add the remaining seeds to the store of the player that still has seeds in their pit
                     Board.Stores.First(store => store.PlayerId == pit.PlayerId).Seeds += pit.Seeds;
                     pit.Seeds = 0;
                 }
@@ -272,6 +279,7 @@ namespace Mancala.Core.Implementations
                 var playerOneStoreSeedsCount = Board.Stores.Where(pit => pit.PlayerId == 0).Sum(pit => pit.Seeds);
                 var playerTwoStoreSeedsCount = Board.Stores.Where(pit => pit.PlayerId == 1).Sum(pit => pit.Seeds);
 
+                // Get the winning player id
                 if (playerOneStoreSeedsCount > playerTwoStoreSeedsCount)
                 {
                     winningPlayerId = 0;
@@ -310,7 +318,7 @@ namespace Mancala.Core.Implementations
             }
         }
         /// <summary>
-        /// Get the sequence id to the best move the ai could make
+        /// Get the sequence id of the best move the ai can make
         /// </summary>
         public int GetBestAiMove()
         {

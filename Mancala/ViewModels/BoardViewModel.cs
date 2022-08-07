@@ -37,6 +37,7 @@ namespace Mancala.ViewModels
                 }
 
                 var nextPlayerName = Players.First(player => player.Id == nextPlayerId).PlayerName;
+
                 if (takePlayerTurnAgain)
                 {
                     _mainWindowViewModel.BannerText = $"{nextPlayerName} can play again.";
