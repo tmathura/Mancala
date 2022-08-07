@@ -1,6 +1,6 @@
 # Mancala
 
-The age old Mancala board game written in .NET 6, WPF and C#.
+The age old Mancala board game written in .NET 6, WPF and C#. You can play with another player or against the computer with my take of AI functionality built in. 
 
 ## How to Play Mancala
 
