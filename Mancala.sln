@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala", "Mancala\Mancala.csproj", "{31AB0722-4FB4-4553-B8A0-DEAB3DD7274C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MancalaTests", "MancalaTests\MancalaTests.csproj", "{6D3C0D49-2098-47B1-9355-474024839E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala.UnitTests", "Mancala.UnitTests\Mancala.UnitTests.csproj", "{6D3C0D49-2098-47B1-9355-474024839E6C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mancala.Domain", "Mancala.Domain\Mancala.Domain.csproj", "{03BF4AB3-75D9-4CD9-BDCF-10A4AB6EB57C}"
 EndProject

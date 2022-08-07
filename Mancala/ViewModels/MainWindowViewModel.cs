@@ -22,7 +22,7 @@ namespace Mancala.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private string _bannerText = "Click \"New Game\" to get started!";
+        private string _bannerText = "Click any \"Pit\" to get started!";
         public string BannerText
         {
             get => _bannerText;
