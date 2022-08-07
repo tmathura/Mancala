@@ -15,7 +15,7 @@
         <TextBlock x:Name="PlayerTwoNameTextBlock" Text="{Binding Players[0].PlayerName}" Margin="16" TextAlignment="Center" FontSize="20" FontWeight="Bold" />
         <StackPanel Margin="16" HorizontalAlignment="Center" Orientation="Horizontal">
             <Button Width="128" Click="NewGame_Click">New Game</Button>
-            <CheckBox Margin="3" IsChecked="{Binding AiEnabled}">Ai Enabled?</CheckBox>
+            <CheckBox Margin="3" IsChecked="{Binding AiEnabled}">AI Enabled?</CheckBox>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -14,7 +14,15 @@
             <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="StoreOne" Grid.Column="0">
-            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Magenta" Fill="#EEE" />
+            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Rectangle.Fill>
+                    <VisualBrush Stretch="None">
+                        <VisualBrush.Visual>
+                            <Border Width="80" Height="200" CornerRadius="40" BorderThickness="1" BorderBrush="Magenta" Background="#EEE"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Rectangle.Fill>
+            </Rectangle>
             <TextBlock x:Name="StoreOneTextBlock" Text="{Binding Stores[1].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
         </Grid>
         <Grid x:Name="Pits" Grid.Column="1">
@@ -40,7 +48,15 @@
             </UniformGrid>
         </Grid>
         <Grid x:Name="StoreTwo" Grid.Column="2">
-            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Magenta" Fill="#EEE" />
+            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Rectangle.Fill>
+                    <VisualBrush Stretch="None">
+                        <VisualBrush.Visual>
+                            <Border Width="80" Height="200" CornerRadius="40" BorderThickness="1" BorderBrush="Magenta" Background="#EEE"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Rectangle.Fill>
+            </Rectangle>
             <TextBlock x:Name="StoreTwoTextBlock" Text="{Binding Stores[0].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
         </Grid>
     </Grid>

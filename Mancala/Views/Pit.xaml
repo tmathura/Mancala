@@ -9,9 +9,9 @@
     <Button.Template>
         <ControlTemplate TargetType="Button">
             <Grid>
-                <Rectangle Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="{Binding Stroke, RelativeSource={RelativeSource AncestorType=views:Pit}}">
-                    <Rectangle.Style>
-                        <Style TargetType="Rectangle">
+                <Ellipse Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="{Binding Stroke, RelativeSource={RelativeSource AncestorType=views:Pit}}">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
                             <Setter Property="Fill" Value="#EEE" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -20,8 +20,8 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </Rectangle.Style>
-                </Rectangle>
+                    </Ellipse.Style>
+                </Ellipse>
                 <TextBlock Text="{Binding Seed, RelativeSource={RelativeSource AncestorType=views:Pit}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
             </Grid>
         </ControlTemplate>
