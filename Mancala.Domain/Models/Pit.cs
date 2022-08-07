@@ -25,11 +25,23 @@ namespace Mancala.Domain.Models
             set
             {
                 _seeds = value;
+                Enabled = _seeds > 0;
                 OnPropertyChanged();
             }
         }
 
         public int SequenceId { get; }
+
+        private bool _enabled;
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                OnPropertyChanged();
+            }
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
