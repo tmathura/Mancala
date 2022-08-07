@@ -9,7 +9,6 @@ namespace Mancala.UnitTests.ViewModels
     public class MainWindowViewModelTests
     {
         private readonly MainWindowViewModel _mainWindowViewModel;
-        private const string DefaultBannerText = "Click any \"Pit\" to get started!";
 
         public MainWindowViewModelTests()
         {
@@ -18,30 +17,26 @@ namespace Mancala.UnitTests.ViewModels
         }
 
         /// <summary>
-        /// Test that the default banner text is correct.
+        /// Test that the initial banner text is correct.
         /// </summary>
         [TestMethod]
-        public void BannerText_DefaultValue()
+        public void BannerText_InitialValue()
         {
             // Assert
-            Assert.AreEqual(DefaultBannerText, _mainWindowViewModel.BannerText);
+            Assert.AreEqual("Click \"New Game\" to get started!", _mainWindowViewModel.BannerText);
         }
 
         /// <summary>
-        /// Test that the default banner text is correct when a new game is started and the banner text was changed.
+        /// Test that the banner text is correct when a new game is started.
         /// </summary>
         [TestMethod]
         public void StartNewGame()
         {
-            // Arrange
-            _mainWindowViewModel.BannerText = "Not the default banner text";
-
-
             // Act
             _mainWindowViewModel.StartNewGame("Player 1", "Player 2");
 
             // Assert
-            Assert.AreEqual(DefaultBannerText, _mainWindowViewModel.BannerText);
+            Assert.AreEqual("Click any \"Pit\" to start playing.", _mainWindowViewModel.BannerText);
         }
     }
 }

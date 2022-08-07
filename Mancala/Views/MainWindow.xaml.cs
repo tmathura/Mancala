@@ -45,6 +45,7 @@ namespace Mancala.Views
             }
 
             _mainWindowViewModel.StartNewGame(playerOneName, playerTwoName);
+            GameBoard.IsEnabled = true;
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Mancala.ViewModels
     {
         private readonly IBoardBl _boardBl;
         public List<Player> Players => _boardBl.Board.Players;
-        private const string DefaultBannerText = "Click any \"Pit\" to get started!";
 
         public MainWindowViewModel(IBoardBl boardBl)
         {
@@ -19,12 +18,12 @@ namespace Mancala.ViewModels
         public void StartNewGame(string playerOneName, string playerTwoName)
         {
             _boardBl.StartNewGame(playerOneName, playerTwoName);
-            BannerText = DefaultBannerText;
+            BannerText = "Click any \"Pit\" to start playing.";
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private string _bannerText = DefaultBannerText;
+        private string _bannerText = "Click \"New Game\" to get started!";
         public string BannerText
         {
             get => _bannerText;
