@@ -11,7 +11,7 @@ namespace Mancala.Views
         {
             InitializeComponent();
 
-            _mainWindowViewModel = new MainWindowViewModel(boardBl);
+            _mainWindowViewModel = new MainWindowViewModel(boardBl) { AiEnabled = true};
 
             DataContext = _mainWindowViewModel;
             var boardViewModel = new BoardViewModel(boardBl, _mainWindowViewModel);

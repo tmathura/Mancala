@@ -2,6 +2,7 @@
 using Mancala.Domain.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Mancala.ViewModels
 {
@@ -18,7 +19,7 @@ namespace Mancala.ViewModels
         public void StartNewGame(string playerOneName, string playerTwoName)
         {
             _boardBl.StartNewGame(playerOneName, playerTwoName);
-            BannerText = "Click any \"Pit\" to start playing.";
+            BannerText = $"{playerOneName} can click any \"Pit\" to start playing.";
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -32,9 +33,25 @@ namespace Mancala.ViewModels
                 if (_bannerText != value)
                 {
                     _bannerText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BannerText)));
+                    OnPropertyChanged();
                 }
             }
+        }
+
+        private bool _aiEnabled;
+        public bool AiEnabled
+        {
+            get => _aiEnabled;
+            set
+            {
+                _aiEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

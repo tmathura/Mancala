@@ -13,6 +13,9 @@
         <TextBlock x:Name="PlayerOneNameTextBlock" Text="{Binding Players[1].PlayerName}" Margin="16" TextAlignment="Center" FontSize="20" FontWeight="Bold" />
         <views:Board x:Name="GameBoard" IsEnabled="False" />
         <TextBlock x:Name="PlayerTwoNameTextBlock" Text="{Binding Players[0].PlayerName}" Margin="16" TextAlignment="Center" FontSize="20" FontWeight="Bold" />
-        <Button Width="128" Margin="16" Click="NewGame_Click">New Game</Button>
+        <StackPanel Margin="16" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Width="128" Click="NewGame_Click">New Game</Button>
+            <CheckBox Margin="3" IsChecked="{Binding AiEnabled}">Ai Enabled?</CheckBox>
+        </StackPanel>
     </StackPanel>
 </Window>

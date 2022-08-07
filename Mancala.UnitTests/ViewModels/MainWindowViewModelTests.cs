@@ -1,3 +1,4 @@
+using System.Linq;
 using Mancala.Core.Interfaces;
 using Mancala.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,11 +33,14 @@ namespace Mancala.UnitTests.ViewModels
         [TestMethod]
         public void StartNewGame()
         {
+            // Arrange
+            const string playerOneName = "Player 1";
+
             // Act
-            _mainWindowViewModel.StartNewGame("Player 1", "Player 2");
+            _mainWindowViewModel.StartNewGame(playerOneName, "Player 2");
 
             // Assert
-            Assert.AreEqual("Click any \"Pit\" to start playing.", _mainWindowViewModel.BannerText);
+            Assert.AreEqual($"{playerOneName} can click any \"Pit\" to start playing.", _mainWindowViewModel.BannerText);
         }
     }
 }

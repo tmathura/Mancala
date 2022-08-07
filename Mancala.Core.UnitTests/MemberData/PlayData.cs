@@ -2,7 +2,7 @@
 
 namespace Mancala.Core.UnitTests.MemberData
 {
-    public class TakePlayerTurnData
+    public class PlayData
     {
         public static IEnumerable<object?[]> GetData()
         {
@@ -38,6 +38,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                1,
                 false,
                 null
             };
@@ -73,6 +74,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                0,
                 false,
                 null
             };
@@ -108,6 +110,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                1,
                 false,
                 null
             };
@@ -143,6 +146,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                0,
                 false,
                 null
             };
@@ -178,6 +182,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                1,
                 false,
                 null
             };

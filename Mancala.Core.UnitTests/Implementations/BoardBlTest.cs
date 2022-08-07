@@ -71,20 +71,21 @@ namespace Mancala.Core.UnitTests.Implementations
         }
 
         /// <summary>
-        /// Test a player taking a turn.
+        /// Test a player playing a turn.
         /// </summary>
         /// <param name="sequenceId">The pit sequence id to pick all the seeds from.</param>
         /// <param name="playerId">The player id of the player who is sowing.</param>
         /// <param name="expectedBoard">The board expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
+        /// <param name="expectedNextPlayerId">The expected id of the player that must play.</param>
         /// <param name="expectedIsGameOver">The expected boolean if the game is over or not.</param>
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
-        [MemberData(nameof(TakePlayerTurnData.GetData), MemberType = typeof(TakePlayerTurnData))]
-        public void TakePlayerTurn(int sequenceId, int playerId, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        [MemberData(nameof(PlayData.GetData), MemberType = typeof(PlayData))]
+        public void Play(int sequenceId, int playerId, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, int expectedNextPlayerId, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Act
-            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
+            var mustPlayerTakeTurnAgain = _boardBl.Play(sequenceId, playerId, false, out var nextPlayerId, out var isGameOver, out var winningPlayerId);
 
             // Assert
             Assert.Equal(expectedBoard.Players.Count, _boardBl.Board.Players.Count);
@@ -113,6 +114,7 @@ namespace Mancala.Core.UnitTests.Implementations
 
             Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
+            Assert.Equal(expectedNextPlayerId, nextPlayerId);
             Assert.Equal(expectedIsGameOver, isGameOver);
             Assert.Equal(expectedWinningPlayerId, winningPlayerId);
         }
@@ -125,17 +127,18 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="boardSetup">The starting board setup</param>
         /// <param name="expectedBoard">The board expected that must be asserted against.</param>
         /// <param name="expectedMustPlayerTakeTurnAgain">The expected boolean if the player must take a turn again.</param>
+        /// <param name="expectedNextPlayerId">The expected id of the player that must play.</param>
         /// <param name="expectedIsGameOver">The expected boolean if the game is over or not.</param>
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
-        [MemberData(nameof(TakePlayerTurnWithASpecificBoardSetupData.GetData), MemberType = typeof(TakePlayerTurnWithASpecificBoardSetupData))]
-        public void TakePlayerTurn_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        [MemberData(nameof(PlayWithASpecificBoardSetupData.GetData), MemberType = typeof(PlayWithASpecificBoardSetupData))]
+        public void Play_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, int expectedNextPlayerId, bool expectedIsGameOver, int? expectedWinningPlayerId)
         {
             // Arrange
             _boardBl = new BoardBl(boardSetup);
 
             // Act
-            var mustPlayerTakeTurnAgain = _boardBl.TakePlayerTurn(sequenceId, playerId, out var isGameOver, out var winningPlayerId);
+            var mustPlayerTakeTurnAgain = _boardBl.Play(sequenceId, playerId, false, out var nextPlayerId, out var isGameOver, out var winningPlayerId);
 
             // Assert
             Assert.Equal(expectedBoard.Players.Count, _boardBl.Board.Players.Count);
@@ -164,6 +167,7 @@ namespace Mancala.Core.UnitTests.Implementations
 
             Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
+            Assert.Equal(expectedNextPlayerId, nextPlayerId);
             Assert.Equal(expectedIsGameOver, isGameOver);
             Assert.Equal(expectedWinningPlayerId, winningPlayerId);
         }
@@ -172,10 +176,10 @@ namespace Mancala.Core.UnitTests.Implementations
         /// Test that when a player takes a turn and an invalid pit is selected an error is thrown.
         /// </summary>
         [Fact]
-        public void TakePlayerTurn_Error_InvalidPitSelected()
+        public void Play_Error_InvalidPitSelected()
         {
             // Act
-            void Action() => _boardBl.TakePlayerTurn(0, 1, out _, out _);
+            void Action() => _boardBl.Play(0, 1, false, out _, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);
@@ -186,17 +190,36 @@ namespace Mancala.Core.UnitTests.Implementations
         /// Test that when a player takes a turn and the pit has no seeds an error is thrown.
         /// </summary>
         [Fact]
-        public void TakePlayerTurn_Error_PitHasNoSeed()
+        public void Play_Error_PitHasNoSeed()
         {
             // Arrange
-            _boardBl.TakePlayerTurn(0, 0, out _, out _);
+            _boardBl.Play(0, 0, false, out _, out _, out _);
 
             // Act
-            void Action() => _boardBl.TakePlayerTurn(0, 0, out _, out _);
+            void Action() => _boardBl.Play(0, 0, false, out _, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);
             Assert.Equal("The selected pit has no seeds.", exception.Message);
+        }
+
+        /// <summary>
+        /// Test the ai selects the best pit with a specific board setup.
+        /// </summary>
+        /// <param name="boardSetup">The starting board setup</param>
+        /// <param name="expectedPitSequenceId">The expected best pit that the ai should choose.</param>
+        [Theory]
+        [MemberData(nameof(GetBestAiMoveWithASpecificBoardSetupData.GetData), MemberType = typeof(GetBestAiMoveWithASpecificBoardSetupData))]
+        public void GetBestAiMove_WithASpecificBoardSetup(Board boardSetup, int expectedPitSequenceId)
+        {
+            // Arrange
+            _boardBl = new BoardBl(boardSetup);
+
+            // Act
+            var pitSequenceId = _boardBl.GetBestAiMove();
+
+            // Assert
+            Assert.Equal(expectedPitSequenceId, pitSequenceId);
         }
     }
 }

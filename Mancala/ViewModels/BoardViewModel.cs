@@ -29,20 +29,27 @@ namespace Mancala.ViewModels
         {
             try
             {
-                var takePlayerTurnAgain = _boardBl.TakePlayerTurn(pit.SequenceId, pit.PlayerId, out _, out _);
+                var takePlayerTurnAgain = _boardBl.Play(pit.SequenceId, pit.PlayerId, _mainWindowViewModel.AiEnabled, out var nextPlayerId, out var isGameOver, out var winningPlayerId);
 
+                if (isGameOver)
+                {
+                    MessageBox.Show($"{Players.First(player => player.Id == winningPlayerId).PlayerName} is the winner!", "Winner!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+
+                var nextPlayerName = Players.First(player => player.Id == nextPlayerId).PlayerName;
                 if (takePlayerTurnAgain)
                 {
-                    _mainWindowViewModel.BannerText = $"{Players.First(player => player.Id == pit.PlayerId).PlayerName} can play again.";
+                    _mainWindowViewModel.BannerText = $"{nextPlayerName} can play again.";
                 }
                 else
                 {
-                    _mainWindowViewModel.BannerText = $"{Players.First(player => player.Id != pit.PlayerId).PlayerName} it is your turn now.";
+                    _mainWindowViewModel.BannerText = $"{nextPlayerName} it is your turn now.";
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Mancala.Core.UnitTests.MemberData
 {
-    public class TakePlayerTurnWithASpecificBoardSetupData
+    public class PlayWithASpecificBoardSetupData
     {
         public static IEnumerable<object?[]> GetData()
         {
@@ -57,6 +57,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                0,
                 false,
                 null
             };
@@ -111,6 +112,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                1,
                 false,
                 null
             };
@@ -165,6 +167,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                1,
                 false,
                 null
             };
@@ -219,6 +222,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                1,
                 false,
                 null
             };
@@ -273,6 +277,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 false,
+                0,
                 true,
                 1
             };
@@ -327,6 +332,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                0,
                 true,
                 1
             };
@@ -381,6 +387,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                1,
                 true,
                 0
             };
@@ -435,6 +442,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                1,
                 true,
                 1
             };
@@ -491,6 +499,7 @@ namespace Mancala.Core.UnitTests.MemberData
                     }
                 ),
                 true,
+                0,
                 true,
                 null
             };
