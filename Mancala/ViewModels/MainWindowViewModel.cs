@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Mancala.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged, IMainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly IBoardBl _boardBl;
         public List<Player> Players => _boardBl.Board.Players;

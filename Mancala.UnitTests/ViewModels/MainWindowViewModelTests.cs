@@ -8,14 +8,13 @@ namespace Mancala.UnitTests.ViewModels
     [TestClass]
     public class MainWindowViewModelTests
     {
-        private readonly Mock<IBoardBl> _boardBl;
         private readonly MainWindowViewModel _mainWindowViewModel;
         private const string DefaultBannerText = "Click any \"Pit\" to get started!";
 
         public MainWindowViewModelTests()
         {
-            _boardBl = new Mock<IBoardBl>();
-            _mainWindowViewModel = new MainWindowViewModel(_boardBl.Object);
+            var boardBl = new Mock<IBoardBl>();
+            _mainWindowViewModel = new MainWindowViewModel(boardBl.Object);
         }
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace Mancala.UnitTests.ViewModels
         /// Test that the default banner text is correct when a new game is started and the banner text was changed.
         /// </summary>
         [TestMethod]
-        public void BannerText_DefaultValueAfterStartGame()
+        public void StartNewGame()
         {
             // Arrange
             _mainWindowViewModel.BannerText = "Not the default banner text";

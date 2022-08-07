@@ -12,13 +12,13 @@ namespace Mancala.ViewModels
     public class BoardViewModel
     {
         private readonly IBoardBl _boardBl;
-        private readonly IMainWindowViewModel _mainWindowViewModel;
+        private readonly MainWindowViewModel _mainWindowViewModel;
         public List<Player> Players => _boardBl.Board.Players;
         public List<Store> Stores => _boardBl.Board.Stores;
         public List<Pit> Pits => _boardBl.Board.Pits;
         public ICommand TakePlayerTurnCommand { get; set; }
 
-        public BoardViewModel(IBoardBl boardBl, IMainWindowViewModel mainWindowViewModel)
+        public BoardViewModel(IBoardBl boardBl, MainWindowViewModel mainWindowViewModel)
         {
             _boardBl = boardBl;
             _mainWindowViewModel = mainWindowViewModel;
