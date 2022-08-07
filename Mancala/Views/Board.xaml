@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Mancala.Views.Board"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Mancala.ViewModels"
+             xmlns:views="clr-namespace:Mancala.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="240" d:DataContext="{d:DesignInstance viewModels:BoardViewModel}">
+    <Grid Height="240">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="StoreOne" Grid.Column="0">
+            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Magenta" Fill="#EEE" />
+            <TextBlock x:Name="StoreOneTextBlock" Text="{Binding Stores[1].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
+        </Grid>
+        <Grid x:Name="Pits" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <UniformGrid x:Name="Pits1" Grid.Row="0" Rows="1" IsEnabled="{Binding Players[1].Enabled}">
+                <views:Pit x:Name="Pit11" Seed="{Binding Pits[11].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[11]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit10" Seed="{Binding Pits[10].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[10]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit9" Seed="{Binding Pits[9].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[9]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit8" Seed="{Binding Pits[8].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[8]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit7" Seed="{Binding Pits[7].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[7]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit6" Seed="{Binding Pits[6].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[6]}" Stroke="Magenta" />
+            </UniformGrid>
+            <UniformGrid x:Name="Pits0" Grid.Row="1" Rows="1" IsEnabled="{Binding Players[0].Enabled}">
+                <views:Pit x:Name="Pit0" Seed="{Binding Pits[0].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[0]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit1" Seed="{Binding Pits[1].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[1]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit2" Seed="{Binding Pits[2].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[2]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit3" Seed="{Binding Pits[3].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[3]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit4" Seed="{Binding Pits[4].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[4]}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit5" Seed="{Binding Pits[5].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[5]}" Stroke="Magenta" />
+            </UniformGrid>
+        </Grid>
+        <Grid x:Name="StoreTwo" Grid.Column="2">
+            <Rectangle Width="80" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Magenta" Fill="#EEE" />
+            <TextBlock x:Name="StoreTwoTextBlock" Text="{Binding Stores[0].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
+        </Grid>
+    </Grid>
+</UserControl>

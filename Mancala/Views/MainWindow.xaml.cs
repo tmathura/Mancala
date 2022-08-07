@@ -14,6 +14,8 @@ namespace Mancala.Views
             _mainWindowViewModel = new MainWindowViewModel(boardBl);
 
             DataContext = _mainWindowViewModel;
+            var boardViewModel = new BoardViewModel(boardBl, _mainWindowViewModel);
+            GameBoard.DataContext = boardViewModel;
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)
