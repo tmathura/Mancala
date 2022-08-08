@@ -1,4 +1,5 @@
 using Mancala.Core.Implementations;
+using Mancala.Domain.Enums;
 using Mancala.Domain.Models;
 using Mancala.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,7 +26,7 @@ namespace Mancala.UnitTests.ViewModels
         public void Play_PlayerOneCanPlayAgain()
         {
             // Arrange
-            var pit = new Pit(2, 0, 4, 2);
+            var pit = new Pit(PlayerPitId.PitTwo, PlayerId.PlayerOne, 4, 2);
 
 
             // Act
@@ -42,7 +43,7 @@ namespace Mancala.UnitTests.ViewModels
         public void Play_PlayerTwoCanPlayAgain()
         {
             // Arrange
-            var pit = new Pit(2, 1, 4, 8);
+            var pit = new Pit(PlayerPitId.PitTwo, PlayerId.PlayerTwo, 4, 8);
 
 
             // Act
@@ -59,7 +60,7 @@ namespace Mancala.UnitTests.ViewModels
         public void Play_PlayerOneTurn()
         {
             // Arrange
-            var pit = new Pit(2, 0, 4, 1);
+            var pit = new Pit(PlayerPitId.PitTwo, PlayerId.PlayerOne, 4, 1);
 
 
             // Act
@@ -76,7 +77,7 @@ namespace Mancala.UnitTests.ViewModels
         public void Play_PlayerTwoTurn()
         {
             // Arrange
-            var pit = new Pit(2, 1, 4, 7);
+            var pit = new Pit(PlayerPitId.PitTwo, PlayerId.PlayerTwo, 4, 7);
 
 
             // Act

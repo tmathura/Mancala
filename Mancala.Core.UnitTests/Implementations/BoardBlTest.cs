@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Mancala.Core.Implementations;
 using Mancala.Core.UnitTests.MemberData;
+using Mancala.Domain.Enums;
 using Mancala.Domain.Models;
 
 namespace Mancala.Core.UnitTests.Implementations
@@ -33,33 +34,31 @@ namespace Mancala.Core.UnitTests.Implementations
             Assert.Equal(playerNames.Count, _boardBl.Board.Players.Count);
 
             Assert.NotNull(_boardBl.Board.Stores);
-            Assert.Equal(2, _boardBl.Board.Stores.Count);
+            Assert.Equal(Enum.GetNames(typeof(PlayerStoreId)).Length, _boardBl.Board.Stores.Count);
 
             Assert.NotNull(_boardBl.Board.Pits);
-            Assert.Equal(12, _boardBl.Board.Pits.Count);
+            Assert.Equal(Enum.GetNames(typeof(PlayerPitSequenceId)).Length, _boardBl.Board.Pits.Count);
 
             for (var playerId = 0; playerId < playerNames.Count; playerId++)
             {
                 var currentPlayer = _boardBl.Board.Players[playerId];
-                Assert.Equal(playerId, currentPlayer.Id);
+                Assert.Equal((PlayerId)playerId, currentPlayer.Id);
                 Assert.Equal(playerNames[playerId], currentPlayer.PlayerName);
 
-                var currentBoard = _boardBl.Board.Stores[playerId];
-                Assert.Equal(playerId, currentBoard.Id);
-                Assert.Equal(playerId, currentBoard.PlayerId);
-                Assert.Equal(0, currentBoard.Seeds);
+                var currentStore = _boardBl.Board.Stores[playerId];
+                Assert.Equal((PlayerStoreId)playerId, currentStore.Id);
+                Assert.Equal((PlayerId)playerId, currentStore.PlayerId);
+                Assert.Equal((int)PitSeedsCount.Zero, currentStore.Seeds);
 
-                var currentPlayerPits = _boardBl.Board.Pits.Where(pit => pit.PlayerId == playerId).ToList();
-                Assert.Equal(6, currentPlayerPits.Count);
-
-                const int totalPitsPerPlayer = 6;
-
-                for (var pitId = 0; pitId < totalPitsPerPlayer; pitId++)
+                var currentPlayerPits = _boardBl.Board.Pits.Where(pit => pit.PlayerId == (PlayerId)playerId).ToList();
+                Assert.Equal((int)PitsCount.Max, currentPlayerPits.Count);
+                
+                for (var pitId = 0; pitId < (int)PitsCount.Max; pitId++)
                 {
-                    Assert.Equal(4, currentPlayerPits[pitId].Seeds);
+                    Assert.Equal((int)PitSeedsCount.Default, currentPlayerPits[pitId].Seeds);
 
                     // Check that the pit id is correct for the specific player
-                    Assert.Equal(pitId, currentPlayerPits[pitId].Id);
+                    Assert.Equal((PlayerPitId)pitId, currentPlayerPits[pitId].Id);
 
                     // Check that the sequence is correct within the list of pits
                     var pitSequence = currentPlayerPits[pitId].SequenceId;
@@ -67,7 +66,8 @@ namespace Mancala.Core.UnitTests.Implementations
                 }
             }
 
-            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+            var totalSeedInGame = (int)PitsCount.Max * (int)PitSeedsCount.Default * Enum.GetNames(typeof(PlayerStoreId)).Length;
+            Assert.Equal(totalSeedInGame, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
         [MemberData(nameof(PlayData.GetData), MemberType = typeof(PlayData))]
-        public void Play(int sequenceId, int playerId, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, int expectedNextPlayerId, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        public void Play(int sequenceId, PlayerId playerId, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, PlayerId expectedNextPlayerId, bool expectedIsGameOver, PlayerId? expectedWinningPlayerId)
         {
             // Act
             var mustPlayerTakeTurnAgain = _boardBl.Play(sequenceId, playerId, false, out var nextPlayerId, out var isGameOver, out var winningPlayerId);
@@ -112,7 +112,9 @@ namespace Mancala.Core.UnitTests.Implementations
                 expectedBoard.Pits[pitIndex].Should().BeEquivalentTo(_boardBl.Board.Pits[pitIndex]);
             }
 
-            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+            var totalSeedInGame = (int)PitsCount.Max * (int)PitSeedsCount.Default * Enum.GetNames(typeof(PlayerStoreId)).Length;
+            Assert.Equal(totalSeedInGame, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
             Assert.Equal(expectedNextPlayerId, nextPlayerId);
             Assert.Equal(expectedIsGameOver, isGameOver);
@@ -132,7 +134,7 @@ namespace Mancala.Core.UnitTests.Implementations
         /// <param name="expectedWinningPlayerId">The expected winning player id if the game is over.</param>
         [Theory]
         [MemberData(nameof(PlayWithASpecificBoardSetupData.GetData), MemberType = typeof(PlayWithASpecificBoardSetupData))]
-        public void Play_WithASpecificBoardSetup(int sequenceId, int playerId, Board boardSetup, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, int expectedNextPlayerId, bool expectedIsGameOver, int? expectedWinningPlayerId)
+        public void Play_WithASpecificBoardSetup(int sequenceId, PlayerId playerId, Board boardSetup, Board expectedBoard, bool expectedMustPlayerTakeTurnAgain, PlayerId expectedNextPlayerId, bool expectedIsGameOver, PlayerId? expectedWinningPlayerId)
         {
             // Arrange
             _boardBl = new BoardBl(boardSetup);
@@ -165,7 +167,9 @@ namespace Mancala.Core.UnitTests.Implementations
                 expectedBoard.Pits[pitIndex].Should().BeEquivalentTo(_boardBl.Board.Pits[pitIndex]);
             }
 
-            Assert.Equal(48, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+            var totalSeedInGame = (int)PitsCount.Max * (int)PitSeedsCount.Default * Enum.GetNames(typeof(PlayerStoreId)).Length;
+            Assert.Equal(totalSeedInGame, _boardBl.Board.Stores.Sum(store => store.Seeds) + _boardBl.Board.Pits.Sum(pit => pit.Seeds));
+
             Assert.Equal(expectedMustPlayerTakeTurnAgain, mustPlayerTakeTurnAgain);
             Assert.Equal(expectedNextPlayerId, nextPlayerId);
             Assert.Equal(expectedIsGameOver, isGameOver);
@@ -179,7 +183,7 @@ namespace Mancala.Core.UnitTests.Implementations
         public void Play_Error_InvalidPitSelected()
         {
             // Act
-            void Action() => _boardBl.Play(0, 1, false, out _, out _, out _);
+            void Action() => _boardBl.Play((int)PlayerPitSequenceId.PitZero, PlayerId.PlayerTwo, false, out _, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);
@@ -196,7 +200,7 @@ namespace Mancala.Core.UnitTests.Implementations
             _boardBl.Play(0, 0, false, out _, out _, out _);
 
             // Act
-            void Action() => _boardBl.Play(0, 0, false, out _, out _, out _);
+            void Action() => _boardBl.Play((int)PlayerPitSequenceId.PitZero, (int)PlayerId.PlayerOne, false, out _, out _, out _);
 
             // Assert
             var exception = Assert.Throws<Exception>(Action);

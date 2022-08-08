@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Mancala.Domain.Enums;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Mancala.Domain.Models
@@ -7,14 +8,14 @@ namespace Mancala.Domain.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public Player(int id, string playerName, bool enabled)
+        public Player(PlayerId id, string playerName, bool enabled)
         {
             Id = id;
             _playerName = playerName;
             Enabled = enabled;
         }
 
-        public int Id { get; }
+        public PlayerId Id { get; }
 
         private string _playerName;
         public string PlayerName

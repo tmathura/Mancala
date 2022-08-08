@@ -23,28 +23,28 @@
                     </VisualBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock x:Name="StoreOneTextBlock" Text="{Binding Stores[1].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
+            <TextBlock x:Name="StoreOneTextBlock" Text="{Binding PlayerTwoStore.Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
         </Grid>
         <Grid x:Name="Pits" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <UniformGrid x:Name="Pits1" Grid.Row="0" Rows="1" IsEnabled="{Binding Players[1].Enabled}">
-                <views:Pit x:Name="Pit11" Seed="{Binding Pits[11].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[11]}" IsEnabled="{Binding Pits[11].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit10" Seed="{Binding Pits[10].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[10]}" IsEnabled="{Binding Pits[10].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit9" Seed="{Binding Pits[9].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[9]}" IsEnabled="{Binding Pits[9].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit8" Seed="{Binding Pits[8].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[8]}" IsEnabled="{Binding Pits[8].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit7" Seed="{Binding Pits[7].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[7]}" IsEnabled="{Binding Pits[7].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit6" Seed="{Binding Pits[6].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[6]}" IsEnabled="{Binding Pits[6].Enabled}" Stroke="Magenta" />
+            <UniformGrid x:Name="Pits1" Grid.Row="0" Rows="1" IsEnabled="{Binding PlayerTwo.Enabled}">
+                <views:Pit x:Name="Pit11" Seed="{Binding PlayerPitEleven.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerPitEleven}" IsEnabled="{Binding PlayerPitEleven.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit10" Seed="{Binding PlayerOnePitTen.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitTen}" IsEnabled="{Binding PlayerOnePitTen.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit9" Seed="{Binding PlayerOnePitNine.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitNine}" IsEnabled="{Binding PlayerOnePitNine.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit8" Seed="{Binding PlayerOnePitEight.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitEight}" IsEnabled="{Binding PlayerOnePitEight.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit7" Seed="{Binding PlayerOnePitSeven.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitSeven}" IsEnabled="{Binding PlayerOnePitSeven.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit6" Seed="{Binding PlayerOnePitSix.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitSix}" IsEnabled="{Binding PlayerOnePitSix.Enabled}" Stroke="Magenta" />
             </UniformGrid>
-            <UniformGrid x:Name="Pits0" Grid.Row="1" Rows="1" IsEnabled="{Binding Players[0].Enabled}">
-                <views:Pit x:Name="Pit0" Seed="{Binding Pits[0].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[0]}" IsEnabled="{Binding Pits[0].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit1" Seed="{Binding Pits[1].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[1]}" IsEnabled="{Binding Pits[1].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit2" Seed="{Binding Pits[2].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[2]}" IsEnabled="{Binding Pits[2].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit3" Seed="{Binding Pits[3].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[3]}" IsEnabled="{Binding Pits[3].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit4" Seed="{Binding Pits[4].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[4]}" IsEnabled="{Binding Pits[4].Enabled}" Stroke="Magenta" />
-                <views:Pit x:Name="Pit5" Seed="{Binding Pits[5].Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding Pits[5]}" IsEnabled="{Binding Pits[5].Enabled}" Stroke="Magenta" />
+            <UniformGrid x:Name="Pits0" Grid.Row="1" Rows="1" IsEnabled="{Binding PlayerOne.Enabled}">
+                <views:Pit x:Name="Pit0" Seed="{Binding PlayerOnePitZero.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitZero}" IsEnabled="{Binding PlayerOnePitZero.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit1" Seed="{Binding PlayerOnePitOne.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitOne}" IsEnabled="{Binding PlayerOnePitOne.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit2" Seed="{Binding PlayerOnePitTwo.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitTwo}" IsEnabled="{Binding PlayerOnePitTwo.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit3" Seed="{Binding PlayerOnePitThree.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitThree}" IsEnabled="{Binding PlayerOnePitThree.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit4" Seed="{Binding PlayerOnePitFour.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitFour}" IsEnabled="{Binding PlayerOnePitFour.Enabled}" Stroke="Magenta" />
+                <views:Pit x:Name="Pit5" Seed="{Binding PlayerOnePitFive.Seeds}" Command="{Binding TakePlayerTurnCommand}" CommandParameter="{Binding PlayerOnePitFive}" IsEnabled="{Binding PlayerOnePitFive.Enabled}" Stroke="Magenta" />
             </UniformGrid>
         </Grid>
         <Grid x:Name="StoreTwo" Grid.Column="2">
@@ -57,7 +57,7 @@
                     </VisualBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock x:Name="StoreTwoTextBlock" Text="{Binding Stores[0].Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
+            <TextBlock x:Name="StoreTwoTextBlock" Text="{Binding PlayerOneStore.Seeds, FallbackValue=0}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
         </Grid>
     </Grid>
 </UserControl>

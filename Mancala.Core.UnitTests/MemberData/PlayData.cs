@@ -1,4 +1,5 @@
-﻿using Mancala.Domain.Models;
+﻿using Mancala.Domain.Enums;
+using Mancala.Domain.Models;
 
 namespace Mancala.Core.UnitTests.MemberData
 {
@@ -8,181 +9,181 @@ namespace Mancala.Core.UnitTests.MemberData
         {
             yield return new object?[]
             {
-                1,
-                0,
+                (int)PlayerPitSequenceId.PitOne,
+                PlayerId.PlayerOne,
                 new Board(
                     new List<Player>
                     {
-                        new(0, "Player 1", false),
-                        new(1, "Player 2", true)
+                        new(PlayerId.PlayerOne, "Player 1", false),
+                        new(PlayerId.PlayerTwo, "Player 2", true)
                     },
                     new List<Store>
                     {
-                        new(0, 0, 0),
-                        new(1, 1, 0)
+                        new(PlayerStoreId.PlayerOne, PlayerId.PlayerOne, 0),
+                        new(PlayerStoreId.PlayerTwo, PlayerId.PlayerTwo, 0)
                     },
                     new List<Pit>
                     {
-                        new (0, 0, 4, 0),
-                        new (1, 0, 0, 1),
-                        new (2, 0, 5, 2),
-                        new (3, 0, 5, 3),
-                        new (4, 0, 5, 4),
-                        new (5, 0, 5, 5),
-                        new (0, 1, 4, 6),
-                        new (1, 1, 4, 7),
-                        new (2, 1, 4, 8),
-                        new (3, 1, 4, 9),
-                        new (4, 1, 4, 10),
-                        new (5, 1, 4, 11)
+                        new (PlayerPitId.PitZero, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitZero),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerOne, 0, (int)PlayerPitSequenceId.PitOne),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitTwo),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitThree),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFour),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFive),
+                        new (PlayerPitId.PitZero, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSix),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSeven),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEight),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitNine),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitTen),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEleven)
                     }
                 ),
                 false,
-                1,
+                PlayerId.PlayerTwo,
                 false,
                 null
             };
             yield return new object?[]
             {
-                2,
-                0,
+                (int)PlayerPitSequenceId.PitTwo,
+                PlayerId.PlayerOne,
                 new Board(
                     new List<Player>
                     {
-                        new(0, "Player 1", true),
-                        new(1, "Player 2", false)
+                        new(PlayerId.PlayerOne, "Player 1", true),
+                        new(PlayerId.PlayerTwo, "Player 2", false)
                     },
                     new List<Store>
                     {
-                        new(0, 0, 1),
-                        new(1, 1, 0)
+                        new(PlayerStoreId.PlayerOne, PlayerId.PlayerOne, 1),
+                        new(PlayerStoreId.PlayerTwo, PlayerId.PlayerTwo, 0)
                     },
                     new List<Pit>
                     {
-                        new (0, 0, 4, 0),
-                        new (1, 0, 4, 1),
-                        new (2, 0, 0, 2),
-                        new (3, 0, 5, 3),
-                        new (4, 0, 5, 4),
-                        new (5, 0, 5, 5),
-                        new (0, 1, 4, 6),
-                        new (1, 1, 4, 7),
-                        new (2, 1, 4, 8),
-                        new (3, 1, 4, 9),
-                        new (4, 1, 4, 10),
-                        new (5, 1, 4, 11)
+                        new (PlayerPitId.PitZero, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitZero),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitOne),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerOne, 0, (int)PlayerPitSequenceId.PitTwo),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitThree),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFour),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFive),
+                        new (PlayerPitId.PitZero, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSix),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSeven),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEight),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitNine),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitTen),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEleven)
                     }
                 ),
                 true,
-                0,
+                PlayerId.PlayerOne,
                 false,
                 null
             };
             yield return new object?[]
             {
-                3,
-                0,
+                (int)PlayerPitSequenceId.PitThree,
+                PlayerId.PlayerOne,
                 new Board(
                     new List<Player>
                     {
-                        new(0, "Player 1", false),
-                        new(1, "Player 2", true)
+                        new(PlayerId.PlayerOne, "Player 1", false),
+                        new(PlayerId.PlayerTwo, "Player 2", true)
                     },
                     new List<Store>
                     {
-                        new(0, 0, 1),
-                        new(1, 1, 0)
+                        new(PlayerStoreId.PlayerOne, PlayerId.PlayerOne, 1),
+                        new(PlayerStoreId.PlayerTwo, PlayerId.PlayerTwo, 0)
                     },
                     new List<Pit>
                     {
-                        new (0, 0, 4, 0),
-                        new (1, 0, 4, 1),
-                        new (2, 0, 4, 2),
-                        new (3, 0, 0, 3),
-                        new (4, 0, 5, 4),
-                        new (5, 0, 5, 5),
-                        new (0, 1, 5, 6),
-                        new (1, 1, 4, 7),
-                        new (2, 1, 4, 8),
-                        new (3, 1, 4, 9),
-                        new (4, 1, 4, 10),
-                        new (5, 1, 4, 11)
+                        new (PlayerPitId.PitZero, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitZero),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitOne),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitTwo),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerOne, 0, (int)PlayerPitSequenceId.PitThree),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFour),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerOne, 5, (int)PlayerPitSequenceId.PitFive),
+                        new (PlayerPitId.PitZero, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitSix),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSeven),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEight),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitNine),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitTen),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEleven)
                     }
                 ),
                 false,
-                1,
+                PlayerId.PlayerTwo,
                 false,
                 null
             };
             yield return new object?[]
             {
-                6,
-                1,
+                (int)PlayerPitSequenceId.PitSix,
+                PlayerId.PlayerTwo,
                 new Board(
                     new List<Player>
                     {
-                        new(0, "Player 1", true),
-                        new(1, "Player 2", false)
+                        new(PlayerId.PlayerOne, "Player 1", true),
+                        new(PlayerId.PlayerTwo, "Player 2", false)
                     },
                     new List<Store>
                     {
-                        new(0, 0, 0),
-                        new(1, 1, 0)
+                        new(PlayerStoreId.PlayerOne, PlayerId.PlayerOne, 0),
+                        new(PlayerStoreId.PlayerTwo, PlayerId.PlayerTwo, 0)
                     },
                     new List<Pit>
                     {
-                        new (0, 0, 4, 0),
-                        new (1, 0, 4, 1),
-                        new (2, 0, 4, 2),
-                        new (3, 0, 4, 3),
-                        new (4, 0, 4, 4),
-                        new (5, 0, 4, 5),
-                        new (0, 1, 0, 6),
-                        new (1, 1, 5, 7),
-                        new (2, 1, 5, 8),
-                        new (3, 1, 5, 9),
-                        new (4, 1, 5, 10),
-                        new (5, 1, 4, 11)
+                        new (PlayerPitId.PitZero, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitZero),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitOne),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitTwo),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitThree),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitFour),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitFive),
+                        new (PlayerPitId.PitZero, PlayerId.PlayerTwo, 0, (int)PlayerPitSequenceId.PitSix),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitSeven),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitEight),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitNine),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitTen),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitEleven)
                     }
                 ),
                 false,
-                0,
+                PlayerId.PlayerOne,
                 false,
                 null
             };
             yield return new object?[]
             {
-                8,
-                1,
+                (int)PlayerPitSequenceId.PitEight,
+                PlayerId.PlayerTwo,
                 new Board(
                     new List<Player>
                     {
-                        new(0, "Player 1", false),
-                        new(1, "Player 2", true)
+                        new(PlayerId.PlayerOne, "Player 1", false),
+                        new(PlayerId.PlayerTwo, "Player 2", true)
                     },
                     new List<Store>
                     {
-                        new(0, 0, 0),
-                        new(1, 1, 1)
+                        new(PlayerStoreId.PlayerOne, PlayerId.PlayerOne, 0),
+                        new(PlayerStoreId.PlayerTwo, PlayerId.PlayerTwo, 1)
                     },
                     new List<Pit>
                     {
-                        new (0, 0, 4, 0),
-                        new (1, 0, 4, 1),
-                        new (2, 0, 4, 2),
-                        new (3, 0, 4, 3),
-                        new (4, 0, 4, 4),
-                        new (5, 0, 4, 5),
-                        new (0, 1, 4, 6),
-                        new (1, 1, 4, 7),
-                        new (2, 1, 0, 8),
-                        new (3, 1, 5, 9),
-                        new (4, 1, 5, 10),
-                        new (5, 1, 5, 11)
+                        new (PlayerPitId.PitZero, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitZero),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitOne),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitTwo),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitThree),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitFour),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerOne, 4, (int)PlayerPitSequenceId.PitFive),
+                        new (PlayerPitId.PitZero, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSix),
+                        new (PlayerPitId.PitOne, PlayerId.PlayerTwo, 4, (int)PlayerPitSequenceId.PitSeven),
+                        new (PlayerPitId.PitTwo, PlayerId.PlayerTwo, 0, (int)PlayerPitSequenceId.PitEight),
+                        new (PlayerPitId.PitThree, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitNine),
+                        new (PlayerPitId.PitFour, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitTen),
+                        new (PlayerPitId.PitFive, PlayerId.PlayerTwo, 5, (int)PlayerPitSequenceId.PitEleven)
                     }
                 ),
                 true,
-                1,
+                PlayerId.PlayerTwo,
                 false,
                 null
             };

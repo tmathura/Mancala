@@ -1,6 +1,6 @@
 ﻿using Mancala.Core.Interfaces;
+using Mancala.Domain.Enums;
 using Mancala.Domain.Models;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -9,7 +9,8 @@ namespace Mancala.ViewModels
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly IBoardBl _boardBl;
-        public List<Player> Players => _boardBl.Board.Players;
+        public Player PlayerOne => _boardBl.Board.Players[(int)PlayerId.PlayerOne];
+        public Player PlayerTwo => _boardBl.Board.Players[(int)PlayerId.PlayerTwo];
 
         public MainWindowViewModel(IBoardBl boardBl)
         {
